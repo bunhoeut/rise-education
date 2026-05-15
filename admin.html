@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Rise Education</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+body { background: var(--bg); }
+.admin-login { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; }
+.admin-login-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg); padding:40px; max-width:380px; width:100%; text-align:center; }
+.live-preview { background:var(--surface2); border-radius:var(--radius-sm); padding:14px 16px; margin-top:8px; font-family:'Noto Sans Khmer',serif; font-size:18px; font-weight:700; color:var(--text); min-height:52px; word-break:break-word; }
+.admin-header { background:var(--surface); border-bottom:1px solid var(--border); padding:0 24px; height:60px; display:flex; align-items:center; justify-content:space-between; }
+.stat-card { background:var(--surface2); border-radius:var(--radius); padding:20px 24px; }
+.stat-val { font-size:32px; font-weight:700; }
+.stat-lbl { font-size:13px; color:var(--muted); margin-top:4px; font-family:'Noto Sans Khmer',serif; }
+</style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div class="admin-login" id="login-screen">
+  <div class="admin-login-card">
+    <img src="logo.png" alt="Rise Education" style="height:48px;margin:0 auto 20px;display:block" onerror="this.style.display='none'">
+    <h2 style="margin-bottom:6px">Admin Panel</h2>
+    <p style="font-family:'Noto Sans Khmer',serif;color:var(--muted);font-size:14px;margin-bottom:28px">Rise Education — Admin Access Only</p>
+    <form onsubmit="doAdminLogin(event)">
+      <div class="form-group" style="text-align:left">
+        <label class="form-label">Admin Password</label>
+        <input type="password" class="form-input" id="admin-pw" placeholder="Enter admin password" required>
+        <div class="form-error" id="pw-error">Password មិនត្រឹមត្រូវ</div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-full">ចូល Admin →</button>
+    </form>
+    <div style="margin-top:20px">
+      <a href="index.html" style="font-size:13px;color:var(--muted)">← ត្រឡប់ Website</a>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN DASHBOARD -->
+<div class="hidden" id="admin-dashboard">
+  <div class="admin-header">
+    <div style="display:flex;align-items:center;gap:12px">
+      <img src="logo.png" alt="Rise Education" style="height:32px" onerror="this.style.display='none'">
+      <span style="font-weight:700;letter-spacing:0.04em">RISE EDUCATION</span>
+      <span style="font-size:12px;color:var(--orange);background:rgba(240,112,32,0.1);padding:3px 10px;border-radius:100px">ADMIN</span>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <a href="index.html" target="_blank" class="btn btn-ghost btn-sm">👁 View Site</a>
+      <button class="btn btn-ghost btn-sm" onclick="adminLogout()">ចាកចេញ</button>
+    </div>
+  </div>
+
+  <div class="admin-layout">
+    <!-- SIDEBAR -->
+    <div class="admin-sidebar">
+      <button class="admin-sidebar-link active" onclick="showTab('publish', this)">
+        ✍️ បោះពុម្ពអត្ថបទ
+      </button>
+      <button class="admin-sidebar-link" onclick="showTab('manage', this)">
+        📋 គ្រប់គ្រងអត្ថបទ
+      </button>
+      <button class="admin-sidebar-link" onclick="showTab('members', this)">
+        👥 សមាជិក VIP
+      </button>
+      <button class="admin-sidebar-link" onclick="showTab('stats', this)">
+        📊 Stats
+      </button>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="admin-content">
+
+      <!-- TAB: PUBLISH -->
+      <div id="tab-publish">
+        <h2 style="margin-bottom:6px">បោះពុម្ពអត្ថបទ</h2>
+        <p style="font-family:'Noto Sans Khmer',serif;color:var(--muted);font-size:14px;margin-bottom:24px">
+          Fill in all fields → Click Publish → Article appears on website immediately
+        </p>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div class="form-group">
+            <label class="form-label">ចំណងជើង (Khmer Title) <span class="req">*</span></label>
+            <input type="text" class="form-input" id="art-title" placeholder="ចំណងជើងអត្ថបទជាភាសាខ្មែរ"
+              oninput="document.getElementById('title-preview').textContent=this.value||'Preview...'">
+            <div class="live-preview" id="title-preview">Preview...</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">English Subtitle</label>
+            <input type="text" class="form-input" id="art-subtitle" placeholder="English subtitle (optional)">
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div class="form-group">
+            <label class="form-label">ប្រភេទ (Pillar) <span class="req">*</span></label>
+            <select class="form-input form-select" id="art-pillar">
+              <option value="">— ជ្រើសរើស Pillar —</option>
+              <option value="growth">🌱 ការអភិវឌ្ឍខ្លួន — Personal Growth</option>
+              <option value="study">📚 ជំនាញសិក្សា — Study Skills</option>
+              <option value="life">💡 ជំនាញជីវិត — Life Skills</option>
+              <option value="career">🚀 ការរីកចម្រើនអាជីព — Career Growth</option>
+              <option value="finance">💰 ហិរញ្ញវត្ថុ — Personal Finance</option>
+              <option value="comm">🗣️ ទំនាក់ទំនង & ភាសា — Communication</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Access Level</label>
+            <select class="form-input form-select" id="art-access">
+              <option value="free">ឥតគិតថ្លៃ — Free (everyone)</option>
+              <option value="vip">⭐ ពិសេស — VIP only</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Cover Image URL <span style="color:var(--muted2)">(ស្រេចចិត្ត)</span></label>
+          <input type="text" class="form-input" id="art-cover" placeholder="https://example.com/image.jpg (leave empty for auto gradient)">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" style="display:flex;justify-content:space-between">
+            <span>ខ្លឹមសារអត្ថបទ <span class="req">*</span> — Paste Khmer article here</span>
+            <span id="readtime-live" style="color:var(--cyan);font-weight:400">⏱ 0 នាទី</span>
+          </label>
+          <textarea class="form-input form-textarea" id="art-content"
+            placeholder="Paste your full Khmer article here...&#10;&#10;Use ## for headings, **bold** for bold text, - for bullet points"
+            oninput="updateReadTime(this.value)"
+            style="min-height:320px;font-family:'Noto Sans Khmer',serif;font-size:15px;line-height:1.8"></textarea>
+          <div class="form-hint">Supports Markdown: ## Heading · **bold** · *italic* · - bullet</div>
+        </div>
+
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <button class="btn btn-primary btn-lg" onclick="publishArticle()">
+            🚀 Publish Article
+          </button>
+          <button class="btn btn-ghost" onclick="clearForm()">Clear Form</button>
+        </div>
+
+        <!-- EDIT MODE indicator -->
+        <div id="edit-indicator" class="hidden" style="margin-top:12px;padding:10px 14px;background:rgba(240,192,64,0.1);border:1px solid rgba(240,192,64,0.3);border-radius:var(--radius-sm)">
+          <span style="font-family:'Noto Sans Khmer',serif;font-size:13px;color:var(--gold)">⚠ កំពុង Edit អត្ថបទ #<span id="edit-id"></span></span>
+          <button class="btn btn-ghost btn-sm" style="margin-left:12px" onclick="cancelEdit()">Cancel Edit</button>
+        </div>
+      </div>
+
+      <!-- TAB: MANAGE -->
+      <div id="tab-manage" class="hidden">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px">
+          <h2>គ្រប់គ្រងអត្ថបទ</h2>
+          <input type="text" class="form-input" id="search-articles" placeholder="🔍 ស្វែងរកអត្ថបទ..."
+            oninput="renderManageTable()" style="max-width:260px">
+        </div>
+        <div style="overflow-x:auto">
+          <table class="data-table" id="manage-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>ចំណងជើង</th>
+                <th>ប្រភេទ</th>
+                <th>Access</th>
+                <th>ថ្ងៃខែ</th>
+                <th>👁 Views</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="manage-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB: MEMBERS -->
+      <div id="tab-members" class="hidden">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px">
+          <h2>សមាជិក VIP</h2>
+          <input type="text" class="form-input" id="search-members" placeholder="🔍 ស្វែងរកតាមលេខទូរស័ព្ទ..."
+            oninput="renderMembersTable()" style="max-width:260px">
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:28px" id="member-stats"></div>
+
+        <h3 style="margin-bottom:12px;color:var(--gold)">⏳ រង់ចាំ Approval</h3>
+        <div style="overflow-x:auto;margin-bottom:32px">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ឈ្មោះ</th>
+                <th>លេខទូរស័ព្ទ</th>
+                <th>គម្រោង</th>
+                <th>Plan</th>
+                <th>ថ្ងៃចុះឈ្មោះ</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="pending-tbody"></tbody>
+          </table>
+        </div>
+
+        <h3 style="margin-bottom:12px;color:var(--green)">✅ VIP Members សកម្ម</h3>
+        <div style="overflow-x:auto">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ឈ្មោះ</th>
+                <th>លេខទូរស័ព្ទ</th>
+                <th>Plan</th>
+                <th>ផុតកំណត់</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="active-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB: STATS -->
+      <div id="tab-stats" class="hidden">
+        <h2 style="margin-bottom:24px">📊 Overview Stats</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:32px" id="stats-grid"></div>
+        <h3 style="margin-bottom:16px">អត្ថបទ Top 5 (by views)</h3>
+        <div id="top-articles"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="app.js"></script>
+<script>
+let editingId = null;
+
+function doAdminLogin(e) {
+  e.preventDefault();
+  const pw = document.getElementById('admin-pw').value;
+  const err = document.getElementById('pw-error');
+  if (pw === CONFIG.admin_password) {
+    AdminSession.login();
+    document.getElementById('login-screen').classList.add('hidden');
+    document.getElementById('admin-dashboard').classList.remove('hidden');
+    loadAllData();
+  } else {
+    err.classList.add('show');
+  }
+}
+
+function adminLogout() {
+  AdminSession.logout();
+  location.reload();
+}
+
+function showTab(name, btn) {
+  ['publish','manage','members','stats'].forEach(t => {
+    document.getElementById('tab-'+t).classList.add('hidden');
+  });
+  document.getElementById('tab-'+name).classList.remove('hidden');
+  document.querySelectorAll('.admin-sidebar-link').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  if (name === 'manage') renderManageTable();
+  if (name === 'members') renderMembersTable();
+  if (name === 'stats') renderStats();
+}
+
+function updateReadTime(content) {
+  const rt = calcReadTime(content);
+  document.getElementById('readtime-live').textContent = `⏱ ${rt} នាទី`;
+}
+
+async function publishArticle() {
+  const title   = document.getElementById('art-title').value.trim();
+  const subtitle= document.getElementById('art-subtitle').value.trim();
+  const pillar  = document.getElementById('art-pillar').value;
+  const access  = document.getElementById('art-access').value;
+  const cover   = document.getElementById('art-cover').value.trim();
+  const content = document.getElementById('art-content').value.trim();
+
+  if (!title || !pillar || !content) {
+    showToast('សូមបំពេញ Title, Pillar, និង Content', 'error');
+    return;
+  }
+
+  const article = {
+    title, subtitle, pillar, access,
+    coverImage: cover,
+    content,
+    excerpt: content.replace(/#+\s|[*_`]/g,'').substring(0,150) + '...',
+    readTime: calcReadTime(content)
+  };
+
+  if (editingId) {
+    await DB.updateArticle(editingId, article);
+    showToast('អត្ថបទត្រូវបានកែប្រែ ✓', 'success');
+    cancelEdit();
+  } else {
+    await DB.addArticle(article);
+    showToast('អត្ថបទត្រូវបានបោះពុម្ព ✓ — លេចឡើងនៅ Website ហើយ!', 'success');
+  }
+  clearForm();
+}
+
+function clearForm() {
+  ['art-title','art-subtitle','art-cover','art-content'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('art-pillar').value = '';
+  document.getElementById('art-access').value = 'free';
+  document.getElementById('title-preview').textContent = 'Preview...';
+  document.getElementById('readtime-live').textContent = '⏱ 0 នាទី';
+  cancelEdit();
+}
+
+function cancelEdit() {
+  editingId = null;
+  document.getElementById('edit-indicator').classList.add('hidden');
+  document.querySelector('.admin-sidebar-link').click();
+}
+
+async function editArticle(id) {
+  const articles = await DB.getArticles();
+  const art = articles.find(a => a.id === id);
+  if (!art) return;
+  editingId = id;
+  document.getElementById('art-title').value    = art.title;
+  document.getElementById('art-subtitle').value = art.subtitle || '';
+  document.getElementById('art-pillar').value   = art.pillar;
+  document.getElementById('art-access').value   = art.access;
+  document.getElementById('art-cover').value    = art.coverImage || '';
+  document.getElementById('art-content').value  = art.content;
+  document.getElementById('title-preview').textContent = art.title;
+  updateReadTime(art.content);
+  document.getElementById('edit-id').textContent = id;
+  document.getElementById('edit-indicator').classList.remove('hidden');
+  showTab('publish', document.querySelector('.admin-sidebar-link'));
+  document.getElementById('art-title').scrollIntoView({behavior:'smooth'});
+}
+
+async function deleteArticle(id) {
+  if (!confirm('លុបអត្ថបទ #' + id + '? មិនអាចត្រឡប់វិញបាន!')) return;
+  await DB.deleteArticle(id);
+  showToast('អត្ថបទត្រូវបានលុប', 'success');
+  renderManageTable();
+}
+
+async function toggleAccess(id) {
+  const articles = await DB.getArticles();
+  const art = articles.find(a => a.id === id);
+  if (!art) return;
+  const newAccess = art.access === 'free' ? 'vip' : 'free';
+  await DB.updateArticle(id, { access: newAccess });
+  showToast(`Changed to ${newAccess}`, 'success');
+  renderManageTable();
+}
+
+async function renderManageTable() {
+  const articles = await DB.getArticles();
+  const q = document.getElementById('search-articles').value.toLowerCase();
+  const filtered = q ? articles.filter(a => a.title.toLowerCase().includes(q)) : articles;
+  const tbody = document.getElementById('manage-tbody');
+  if (filtered.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:32px;font-family:'Noto Sans Khmer',serif">មិនមានអត្ថបទ</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = filtered.map(a => {
+    const p = getPillar(a.pillar);
+    return `<tr>
+      <td style="color:var(--muted);font-size:12px">#${a.id}</td>
+      <td>
+        <div style="font-family:'Noto Sans Khmer',serif;font-size:13px;max-width:260px;word-break:break-word">${a.title}</div>
+      </td>
+      <td><span style="font-size:11px;padding:2px 8px;border-radius:100px;background:${p.color}22;color:${p.color}">${p.kh}</span></td>
+      <td>
+        <button onclick="toggleAccess(${a.id})" style="font-size:11px;border:none;padding:3px 8px;border-radius:100px;cursor:pointer;
+          ${a.access==='free' ? 'background:rgba(96,240,168,0.15);color:#60f0a8' : 'background:rgba(240,192,64,0.15);color:#F0C040'}">
+          ${a.access==='free' ? 'ឥតគិតថ្លៃ' : '⭐ ពិសេស'}
+        </button>
+      </td>
+      <td style="font-size:12px;color:var(--muted)">${a.date}</td>
+      <td style="font-size:13px">${a.views||0}</td>
+      <td>
+        <div style="display:flex;gap:6px">
+          <button class="btn btn-ghost btn-sm" onclick="editArticle(${a.id})">✏️ Edit</button>
+          <button class="btn btn-sm" onclick="deleteArticle(${a.id})" style="background:rgba(240,96,96,0.1);color:var(--red);border:1px solid rgba(240,96,96,0.2)">🗑</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+async function renderMembersTable() {
+  const users = await DB.getUsers();
+  const q = document.getElementById('search-members').value.toLowerCase();
+  const filtered = q ? users.filter(u => u.phone.includes(q) || u.name.toLowerCase().includes(q)) : users;
+
+  const pending = filtered.filter(u => !u.vip && !u.rejected);
+  const active  = filtered.filter(u => u.vip);
+
+  // Stats
+  const statsEl = document.getElementById('member-stats');
+  statsEl.innerHTML = [
+    { val: users.length, lbl: 'ចុះឈ្មោះសរុប', color: 'var(--cyan)' },
+    { val: active.length, lbl: 'VIP សកម្ម', color: 'var(--green)' },
+    { val: pending.length, lbl: 'រង់ចាំ Approval', color: 'var(--gold)' },
+    { val: users.filter(u=>u.rejected).length, lbl: 'Rejected', color: 'var(--red)' }
+  ].map(s => `
+    <div class="stat-card">
+      <div class="stat-val" style="color:${s.color}">${s.val}</div>
+      <div class="stat-lbl">${s.lbl}</div>
+    </div>`).join('');
+
+  // Pending
+  const pendingBody = document.getElementById('pending-tbody');
+  pendingBody.innerHTML = pending.length === 0
+    ? `<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:24px;font-family:'Noto Sans Khmer',serif">មិនមានការស្នើ VIP ថ្មី</td></tr>`
+    : pending.map(u => `<tr>
+        <td style="font-family:'Noto Sans Khmer',serif">${u.name}</td>
+        <td>${u.phone}</td>
+        <td><span style="font-size:12px;color:var(--gold)">${u.plan}</span></td>
+        <td style="font-size:12px;color:var(--muted)">${u.registeredDate}</td>
+        <td>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <button class="btn btn-sm" onclick="activateUser(${u.id},'${u.plan}')"
+              style="background:rgba(96,240,168,0.15);color:var(--green);border:1px solid rgba(96,240,168,0.3)">
+              ✅ Activate VIP
+            </button>
+            <button class="btn btn-sm" onclick="rejectUser(${u.id})"
+              style="background:rgba(240,96,96,0.1);color:var(--red);border:1px solid rgba(240,96,96,0.2)">
+              ❌ Reject
+            </button>
+          </div>
+        </td>
+      </tr>`).join('');
+
+  // Active
+  const activeBody = document.getElementById('active-tbody');
+  activeBody.innerHTML = active.length === 0
+    ? `<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:24px;font-family:'Noto Sans Khmer',serif">មិនទាន់មី VIP members</td></tr>`
+    : active.map(u => `<tr>
+        <td style="font-family:'Noto Sans Khmer',serif">${u.name}</td>
+        <td>${u.phone}</td>
+        <td><span style="font-size:12px;color:var(--gold)">${u.plan}</span></td>
+        <td style="font-size:12px;color:${new Date(u.expiry)<new Date()?'var(--red)':'var(--green)'}">${u.expiry||'—'}</td>
+        <td>
+          <button class="btn btn-ghost btn-sm" onclick="activateUser(${u.id},'${u.plan}')">🔄 Renew</button>
+        </td>
+      </tr>`).join('');
+}
+
+async function activateUser(id, plan) {
+  await DB.activateVIP(id, plan);
+  showToast('VIP Activated ✓', 'success');
+  renderMembersTable();
+}
+
+async function rejectUser(id) {
+  await DB.rejectUser(id);
+  showToast('User rejected', 'error');
+  renderMembersTable();
+}
+
+async function renderStats() {
+  const articles = await DB.getArticles();
+  const users    = await DB.getUsers();
+  const totalViews = articles.reduce((s,a) => s+(a.views||0), 0);
+
+  document.getElementById('stats-grid').innerHTML = [
+    { val: articles.length, lbl: 'អត្ថបទសរុប', color: 'var(--cyan)' },
+    { val: articles.filter(a=>a.access==='free').length, lbl: 'ឥតគិតថ្លៃ', color: 'var(--green)' },
+    { val: articles.filter(a=>a.access==='vip').length,  lbl: '⭐ VIP', color: 'var(--gold)' },
+    { val: users.length, lbl: 'Users ចុះឈ្មោះ', color: 'var(--cyan)' },
+    { val: users.filter(u=>u.vip).length, lbl: 'VIP Members', color: 'var(--green)' },
+    { val: totalViews, lbl: 'Views សរុប', color: 'var(--orange)' }
+  ].map(s => `
+    <div class="stat-card">
+      <div class="stat-val" style="color:${s.color}">${s.val}</div>
+      <div class="stat-lbl">${s.lbl}</div>
+    </div>`).join('');
+
+  const top5 = [...articles].sort((a,b)=>(b.views||0)-(a.views||0)).slice(0,5);
+  document.getElementById('top-articles').innerHTML = top5.map((a,i) => `
+    <div style="display:flex;align-items:center;gap:12px;padding:12px;border-bottom:1px solid var(--border)">
+      <span style="font-size:18px;font-weight:700;color:var(--muted);width:24px">${i+1}</span>
+      <div style="flex:1;font-family:'Noto Sans Khmer',serif;font-size:14px">${a.title}</div>
+      <span style="color:var(--orange);font-weight:700">${a.views||0} views</span>
+    </div>`).join('');
+}
+
+async function loadAllData() {
+  // Pre-load
+  await DB.getArticles();
+  await DB.getUsers();
+}
+
+// Check if already logged in
+if (AdminSession.isLoggedIn()) {
+  document.getElementById('login-screen').classList.add('hidden');
+  document.getElementById('admin-dashboard').classList.remove('hidden');
+  loadAllData();
+}
+</script>
+</body>
+</html>

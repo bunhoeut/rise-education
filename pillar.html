@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ប្រធានបទ — Rise Education</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="nav-placeholder"></div>
+
+<main>
+  <div id="pillar-header"></div>
+
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div class="filter-bar" id="filter-bar">
+        <button class="filter-btn active" onclick="filterArticles('all', this)">ទាំងអស់</button>
+        <button class="filter-btn" onclick="filterArticles('free', this)">ឥតគិតថ្លៃ</button>
+        <button class="filter-btn" onclick="filterArticles('vip', this)">⭐ ពិសេស</button>
+      </div>
+      <div class="articles-grid" id="articles-grid">
+        <div style="grid-column:1/-1;text-align:center;padding:48px;color:var(--muted);font-family:'Noto Sans Khmer',serif">
+          កំពុងផ្ទុក...
+        </div>
+      </div>
+      <div id="empty-state" class="hidden" style="text-align:center;padding:64px 0">
+        <div style="font-size:48px;margin-bottom:12px">📭</div>
+        <div style="font-family:'Noto Sans Khmer',serif;color:var(--muted)">មិនទាន់មានអត្ថបទក្នុងប្រភេទនេះ</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="footer-placeholder"></div>
+
+<script src="app.js"></script>
+<script>
+let allArticles = [];
+let currentFilter = 'all';
+const pillarId = getParam('pillar');
+const isVIP = Session.isVIP();
+
+(async function() {
+  initPage('pillars');
+  const articles = await DB.getArticles();
+
+  // If specific pillar
+  if (pillarId) {
+    const pillar = getPillar(pillarId);
+    allArticles = articles.filter(a => a.pillar === pillarId);
+    document.title = `${pillar.kh} — Rise Education`;
+
+    document.getElementById('pillar-header').innerHTML = `
+      <div style="background:${pillar.color}0d;border-bottom:1px solid ${pillar.color}22;padding:40px 0 32px">
+        <div class="container">
+          <a href="index.html" style="font-size:13px;color:var(--muted);display:inline-flex;align-items:center;gap:6px;margin-bottom:16px">
+            ← ត្រឡប់ទំព័រដើម
+          </a>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+            <span style="font-size:32px">${pillar.icon}</span>
+            <div>
+              <h1 style="font-size:clamp(22px,4vw,36px);color:${pillar.color}">${pillar.kh}</h1>
+              <div style="font-size:14px;color:var(--muted)">${pillar.en}</div>
+            </div>
+          </div>
+          <div id="article-count" style="font-family:'Noto Sans Khmer',serif;font-size:14px;color:var(--muted)"></div>
+        </div>
+      </div>`;
+  } else {
+    // All pillars
+    allArticles = articles;
+    document.title = `ប្រធានបទទាំងអស់ — Rise Education`;
+    document.getElementById('pillar-header').innerHTML = `
+      <div class="page-header">
+        <div class="container">
+          <h1>ប្រធានបទទាំងអស់</h1>
+          <p style="font-family:'Noto Sans Khmer',serif;color:var(--muted);margin-top:8px">All Content Pillars</p>
+
+          <!-- Pillar filter chips -->
+          <div class="pillars-row" style="margin-top:20px">
+            <a class="pillar-chip active" href="pillar.html" style="border-color:var(--orange)">
+              <span class="pillar-dot" style="background:var(--orange)"></span>
+              <div><div class="pillar-kh">ទាំងអស់</div><div class="pillar-en">All</div></div>
+            </a>
+            ${CONFIG.pillars.map(p => `
+              <a class="pillar-chip" href="pillar.html?pillar=${p.id}">
+                <span class="pillar-dot" style="background:${p.color}"></span>
+                <div><div class="pillar-kh">${p.kh}</div><div class="pillar-en">${p.en}</div></div>
+              </a>`).join('')}
+          </div>
+        </div>
+      </div>`;
+  }
+
+  renderArticles();
+})();
+
+function filterArticles(type, btn) {
+  currentFilter = type;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderArticles();
+}
+
+function renderArticles() {
+  const grid = document.getElementById('articles-grid');
+  const empty = document.getElementById('empty-state');
+  const countEl = document.getElementById('article-count');
+
+  let filtered = allArticles;
+  if (currentFilter !== 'all') filtered = allArticles.filter(a => a.access === currentFilter);
+
+  if (countEl) countEl.textContent = `អត្ថបទ ${filtered.length} ក្នុងប្រភេទនេះ`;
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '';
+    empty.classList.remove('hidden');
+  } else {
+    empty.classList.add('hidden');
+    grid.innerHTML = filtered.map(a => buildArticleCard(a, isVIP)).join('');
+  }
+}
+</script>
+</body>
+</html>

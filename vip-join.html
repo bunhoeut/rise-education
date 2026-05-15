@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ចូលរួម VIP — Rise Education</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+/* ── Pricing Cards ── */
+.plan-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  margin-bottom: 0;
+}
+.plan-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border2);
+  border-radius: 20px;
+  padding: 28px 24px 24px;
+  text-align: center;
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+.plan-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,0.10); }
+.plan-card.featured {
+  border-color: var(--gold);
+  background: linear-gradient(160deg, #fffbeb 0%, #ffffff 60%);
+  box-shadow: 0 4px 24px rgba(217,119,6,0.12);
+}
+.plan-card.featured:hover { box-shadow: 0 10px 40px rgba(217,119,6,0.18); }
+.plan-badge {
+  position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+  background: var(--gold); color: #fff;
+  font-size: 11px; font-weight: 700; font-family: 'Noto Sans Khmer', sans-serif;
+  padding: 4px 16px; border-radius: 100px; white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(217,119,6,0.3);
+}
+.plan-number {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+  color: var(--muted); font-family: 'Inter', sans-serif;
+  text-transform: uppercase; margin-bottom: 8px;
+}
+.plan-name {
+  font-family: 'Noto Sans Khmer', sans-serif;
+  font-size: 17px; font-weight: 700; color: var(--text);
+  margin-bottom: 4px;
+}
+.plan-name-en {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px; color: var(--muted); margin-bottom: 20px;
+}
+.plan-divider {
+  height: 1px; background: var(--border); margin: 16px 0;
+}
+.plan-price-khr {
+  font-family: 'Noto Sans Khmer', sans-serif;
+  font-size: 30px; font-weight: 700; color: var(--text); line-height: 1;
+}
+.plan-price-khr span { font-size: 16px; font-weight: 500; color: var(--muted); }
+.plan-price-usd {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px; color: var(--muted); margin-top: 4px;
+}
+.plan-perday {
+  font-family: 'Noto Sans Khmer', sans-serif;
+  font-size: 12px; color: var(--accent); font-weight: 600;
+  margin: 6px 0 0;
+}
+.plan-save {
+  display: inline-block; font-size: 11px; font-weight: 700;
+  background: var(--green-lt); color: var(--green);
+  padding: 3px 10px; border-radius: 100px; margin-top: 8px;
+  font-family: 'Inter', sans-serif;
+}
+.plan-cta {
+  margin-top: 20px; width: 100%;
+  font-family: 'Noto Sans Khmer', sans-serif; font-size: 14px;
+}
+
+/* ── Benefits Grid 2×2 ── */
+.benefit-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+@media (max-width: 480px) { .benefit-grid { grid-template-columns: 1fr; } }
+.benefit-item {
+  background: linear-gradient(135deg, var(--surface2) 0%, var(--surface) 100%);
+  border: 1px solid var(--border2);
+  border-radius: 14px;
+  padding: 18px 18px;
+  display: flex; align-items: flex-start; gap: 12px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.benefit-item:hover { border-color: var(--accent); transform: translateY(-2px); }
+.benefit-icon {
+  width: 38px; height: 38px; border-radius: 10px;
+  background: var(--accent); opacity: 0.12;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0; position: relative;
+}
+.benefit-icon-inner {
+  position: absolute; font-size: 18px; opacity: 1;
+}
+.benefit-text { flex: 1; }
+.benefit-title {
+  font-family: 'Noto Sans Khmer', sans-serif;
+  font-size: 14px; font-weight: 700; color: var(--text);
+  margin-bottom: 4px; line-height: 1.4;
+}
+.benefit-desc {
+  font-family: 'Noto Sans Khmer', sans-serif;
+  font-size: 12px; color: var(--muted); line-height: 1.6;
+}
+
+/* ── Payment Info Box ── */
+.payment-info {
+  background: linear-gradient(135deg, #eff6ff 0%, #fff 100%);
+  border: 1.5px solid #bfdbfe;
+  border-radius: 16px;
+  padding: 24px 28px;
+  text-align: center;
+}
+.payment-steps {
+  display: flex; flex-direction: column; gap: 10px;
+  text-align: left; margin-top: 16px;
+}
+.payment-step {
+  display: flex; align-items: flex-start; gap: 12px;
+  font-family: 'Noto Sans Khmer', sans-serif;
+  font-size: 14px; color: var(--text); line-height: 1.6;
+}
+.step-num {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  font-size: 12px; font-weight: 700; font-family: 'Inter', sans-serif;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+</style>
+</head>
+<body>
+<div id="nav-placeholder"></div>
+
+<main>
+  <!-- PAGE HEADER -->
+  <div style="background:linear-gradient(160deg,#1e1b4b 0%,#312e81 60%,#1e3a5f 100%);padding:56px 0 40px;text-align:center;color:#fff">
+    <div class="container-sm">
+      <div style="font-size:11px;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:12px;color:rgba(255,255,255,0.6);font-family:'Inter',sans-serif">⭐ VIP MEMBERSHIP</div>
+      <h1 style="font-size:clamp(26px,5vw,42px);margin-bottom:14px;color:#fff;font-family:'Noto Sans Khmer',sans-serif;font-weight:700">ចូលរួមជាសមាជិក VIP</h1>
+      <p style="font-family:'Noto Sans Khmer',sans-serif;color:rgba(255,255,255,0.75);font-size:15px;line-height:1.9;max-width:480px;margin:0 auto 20px">
+        ទទួលបានខ្លឹមសារពិសេស មេរៀនជ្រៅជ្រះ និងសហគមន៍អ្នករៀនដ៏រឹងមាំ — ជាភាសាខ្មែរ
+      </p>
+      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:100px;padding:8px 20px;font-family:'Noto Sans Khmer',sans-serif;font-size:13px;color:#fff">
+        ☕ តម្លៃតិចជាងកាហ្វេមួយកែវ — ២៦៧ រៀល/ថ្ងៃ
+      </div>
+    </div>
+  </div>
+
+  <!-- PRICING PLANS -->
+  <section style="padding:48px 0 40px">
+    <div class="container">
+      <div style="text-align:center;margin-bottom:32px">
+        <h2 style="font-family:'Noto Sans Khmer',sans-serif;font-size:22px;margin-bottom:6px">ជ្រើសរើសគម្រោងរបស់អ្នក</h2>
+        <p style="font-family:'Noto Sans Khmer',sans-serif;color:var(--muted);font-size:14px">គ្រប់គម្រោងទទួលបានខ្លឹមសារ VIP ពេញ — ជ្រើសរើសតាមភាពងាយស្រួល</p>
+      </div>
+      <div class="plan-grid">
+
+        <!-- MONTHLY -->
+        <div class="plan-card" onclick="selectPlan('monthly')">
+          <div class="plan-number">គម្រោងទី ១</div>
+          <div class="plan-name">គម្រោងប្រចាំខែ</div>
+          <div class="plan-name-en">Monthly Plan</div>
+          <div class="plan-divider"></div>
+          <div class="plan-price-khr">៨,០០០ <span>រៀល</span></div>
+          <div class="plan-price-usd">≈ $2.00 / ខែ</div>
+          <div class="plan-perday">~២៦៧ រៀល / ថ្ងៃ</div>
+          <div style="height:28px"></div>
+          <button class="btn btn-ghost plan-cta" onclick="selectPlan('monthly')">ជ្រើសរើសគម្រោងនេះ</button>
+        </div>
+
+        <!-- QUARTERLY -->
+        <div class="plan-card" onclick="selectPlan('quarterly')">
+          <div class="plan-number">គម្រោងទី ២</div>
+          <div class="plan-name">គម្រោងប្រចាំត្រីមាស</div>
+          <div class="plan-name-en">Quarterly Plan</div>
+          <div class="plan-divider"></div>
+          <div class="plan-price-khr">២០,០០០ <span>រៀល</span></div>
+          <div class="plan-price-usd">≈ $5.00 / ៣ ខែ</div>
+          <div class="plan-perday">~២២២ រៀល / ថ្ងៃ</div>
+          <div class="plan-save">✓ សន្សំ 17%</div>
+          <button class="btn btn-ghost plan-cta" onclick="selectPlan('quarterly')">ជ្រើសរើសគម្រោងនេះ</button>
+        </div>
+
+        <!-- YEARLY -->
+        <div class="plan-card featured" onclick="selectPlan('yearly')">
+          <div class="plan-badge">⭐ តម្លៃល្អបំផុត</div>
+          <div class="plan-number">គម្រោងទី ៣</div>
+          <div class="plan-name">គម្រោងប្រចាំឆ្នាំ</div>
+          <div class="plan-name-en">Yearly Plan</div>
+          <div class="plan-divider"></div>
+          <div class="plan-price-khr">៧២,០០០ <span>រៀល</span></div>
+          <div class="plan-price-usd">≈ $18.00 / ឆ្នាំ</div>
+          <div class="plan-perday">~១៩៧ រៀល / ថ្ងៃ</div>
+          <div class="plan-save">✓ សន្សំ 25%</div>
+          <button class="btn btn-gold plan-cta" onclick="selectPlan('yearly')">ជ្រើសរើសគម្រោងនេះ</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- VIP BENEFITS 2×2 -->
+  <section style="padding:0 0 48px">
+    <div class="container-sm">
+      <div class="card" style="padding:32px">
+        <h2 style="font-family:'Noto Sans Khmer',sans-serif;font-size:20px;font-weight:700;text-align:center;margin-bottom:6px">
+          តើអ្នកនឹងទទួលបានអ្វីខ្លះ<br>ពីគម្រោង VIP?
+        </h2>
+        <p style="font-family:'Noto Sans Khmer',sans-serif;font-size:13px;color:var(--muted);text-align:center;margin-bottom:24px">
+          ខ្លឹមសារបង្រៀនដោយអ្នកជំនាញ — ជាភាសាខ្មែរ ប្រកបដោយគុណភាព
+        </p>
+        <div class="benefit-grid">
+
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <div class="benefit-icon-inner">📖</div>
+            </div>
+            <div class="benefit-text">
+              <div class="benefit-title">អានអត្ថបទ VIP ពិសេសៗ<br>ដោយគ្មានដែនកំណត់</div>
+              <div class="benefit-desc">ខ្លឹមសារជ្រៅជ្រះ ជ្រើសរើសដោយយកចិត្តទុកដាក់</div>
+            </div>
+          </div>
+
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <div class="benefit-icon-inner">🗓️</div>
+            </div>
+            <div class="benefit-text">
+              <div class="benefit-title">ទទួលបានមេរៀនថ្មីៗ<br>រៀងរាល់សប្តាហ៍</div>
+              <div class="benefit-desc">មាតិកាថ្មីបន្ថែមជាប្រចាំ មិនចេះចប់</div>
+            </div>
+          </div>
+
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <div class="benefit-icon-inner">⚡</div>
+            </div>
+            <div class="benefit-text">
+              <div class="benefit-title">ទទួលបានមេរៀនមុនគេ<br>(Early Access)</div>
+              <div class="benefit-desc">ជាអ្នកដំបូងបង្អស់ ដែលបានអានខ្លឹមសារថ្មី</div>
+            </div>
+          </div>
+
+          <div class="benefit-item">
+            <div class="benefit-icon">
+              <div class="benefit-icon-inner">💬</div>
+            </div>
+            <div class="benefit-text">
+              <div class="benefit-title">ចូលរួមក្រុមពិភាក្សា<br>VIP Telegram ពិសេស</div>
+              <div class="benefit-desc">ភ្ជាប់ជាមួយសហគមន៍អ្នករៀន និងទទួលការណែនាំ</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REGISTRATION FORM -->
+  <section style="padding:0 0 64px" id="register-section">
+    <div class="container-sm">
+      <div class="card" style="padding:32px" id="form-card">
+
+        <!-- Payment info box — KHQR universal -->
+        <div style="background:linear-gradient(135deg,#eff6ff 0%,#f0fdf4 100%);border:1.5px solid #bfdbfe;border-radius:16px;padding:24px 24px 20px;margin-bottom:28px">
+          <!-- Header -->
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+            <div style="width:38px;height:38px;background:linear-gradient(135deg,#1e3a5f,#1e40af);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">💳</div>
+            <div>
+              <div style="font-family:'Noto Sans Khmer',sans-serif;font-weight:700;font-size:15px;color:#1e3a5f;line-height:1.4">
+                របៀបបង់ប្រាក់តាមរយៈការស្កេន KHQR
+              </div>
+              <div style="font-family:'Noto Sans Khmer',sans-serif;font-size:12px;color:var(--green);font-weight:600;margin-top:2px">
+                ✓ ទទួលបានគ្រប់ធនាគារ — ABA · ACLEDA · Wing · និងច្រើនទៀត
+              </div>
+            </div>
+          </div>
+
+          <div style="height:1px;background:#dbeafe;margin:14px 0"></div>
+
+          <!-- Steps -->
+          <div style="display:flex;flex-direction:column;gap:12px">
+
+            <div style="display:flex;gap:12px;align-items:flex-start">
+              <div style="width:28px;height:28px;border-radius:50%;background:#1e40af;color:#fff;font-size:12px;font-weight:700;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px">១</div>
+              <div style="font-family:'Noto Sans Khmer',sans-serif;font-size:13px;color:#1e3a5f;line-height:1.75">
+                បំពេញព័ត៌មានចុះឈ្មោះខាងក្រោម និងជ្រើសរើសគម្រោងដែលអ្នកពេញចិត្ត។
+              </div>
+            </div>
+
+            <div style="display:flex;gap:12px;align-items:flex-start">
+              <div style="width:28px;height:28px;border-radius:50%;background:#1e40af;color:#fff;font-size:12px;font-weight:700;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px">២</div>
+              <div style="font-family:'Noto Sans Khmer',sans-serif;font-size:13px;color:#1e3a5f;line-height:1.75">
+                បន្ទាប់ពីចុចប៊ូតុង <strong style="color:#1d4ed8">«ចុះឈ្មោះ»</strong> រួចរាល់ សូមចុចលើប៊ូតុង Telegram ដើម្បីទាក់ទងទៅកាន់ Admin។
+              </div>
+            </div>
+
+            <div style="display:flex;gap:12px;align-items:flex-start">
+              <div style="width:28px;height:28px;border-radius:50%;background:#1e40af;color:#fff;font-size:12px;font-weight:700;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px">៣</div>
+              <div style="font-family:'Noto Sans Khmer',sans-serif;font-size:13px;color:#1e3a5f;line-height:1.75">
+                Admin នឹងផ្ញើរូបភាព KHQR ទៅកាន់អ្នក។ អ្នកអាចប្រើប្រាស់<strong style="color:#1d4ed8">កម្មវិធីធនាគារណាមួយ</strong>ក៏បាន ដើម្បីស្កេនបង់ប្រាក់។
+              </div>
+            </div>
+
+            <div style="display:flex;gap:12px;align-items:flex-start">
+              <div style="width:28px;height:28px;border-radius:50%;background:#059669;color:#fff;font-size:12px;font-weight:700;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px">៤</div>
+              <div style="font-family:'Noto Sans Khmer',sans-serif;font-size:13px;color:#1e3a5f;line-height:1.75">
+                ការអនុម័តចូលជាសមាជិក VIP នឹងត្រូវរៀបចំជូនក្នុងរយៈពេលយ៉ាងយូរ <strong style="color:#059669">២៤ ម៉ោង</strong>។
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <h2 style="margin-bottom:8px;font-family:'Noto Sans Khmer',sans-serif">ចុះឈ្មោះ VIP</h2>
+        <p style="font-family:'Noto Sans Khmer',sans-serif;color:var(--muted);margin-bottom:24px;font-size:14px">
+          បំពេញព័ត៌មានខាងក្រោម — Bunhoeut នឹងទំនាក់ទំនងអ្នកតាម Telegram
+        </p>
+
+        <form id="vip-form" onsubmit="submitVIP(event)">
+          <div class="form-group">
+            <label class="form-label">ឈ្មោះពេញ <span class="req">*</span></label>
+            <input type="text" class="form-input" id="f-name" placeholder="ឧ. Dara Sok" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">លេខទូរស័ព្ទ <span class="req">*</span></label>
+            <input type="tel" class="form-input" id="f-phone" placeholder="0XX-XXX-XXX" required>
+            <div class="form-hint">លេខនេះជា ID account របស់អ្នក — Admin នឹងទំនាក់ទំនងអ្នកតាមលេខនេះ</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">គម្រោងដែលជ្រើសរើស <span class="req">*</span></label>
+            <select class="form-input form-select" id="f-plan" required>
+              <option value="">— ជ្រើសរើសគម្រោង —</option>
+              <option value="monthly">គម្រោងប្រចាំខែ — ៨,០០០ រៀល (~$2.00)</option>
+              <option value="quarterly">គម្រោងប្រចាំត្រីមាស — ២០,០០០ រៀល (~$5.00) សន្សំ 17%</option>
+              <option value="yearly">គម្រោងប្រចាំឆ្នាំ — ៧២,០០០ រៀល (~$18.00) សន្សំ 25%</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password <span style="color:var(--muted2)">(ស្រេចចិត្ត)</span></label>
+            <input type="password" class="form-input" id="f-password" placeholder="បង្កើត Password (ស្រេចចិត្ត)">
+            <div class="form-hint">ប្រសិនបើគ្មាន — Login ដោយលេខទូរស័ព្ទតែប៉ុណ្ណោះ</div>
+          </div>
+          <button type="submit" class="btn btn-gold btn-full btn-lg" id="submit-btn">
+            ចុះឈ្មោះ VIP ឥឡូវនេះ →
+          </button>
+        </form>
+
+        <!-- SUCCESS SCREEN -->
+        <div class="success-screen hidden" id="success-screen">
+          <div class="success-icon">🎉</div>
+          <div class="success-title" id="success-name">សូមអរគុណ!</div>
+          <div class="success-desc">
+            គណនីរបស់អ្នកត្រូវបានបង្កើតរួចហើយ។<br>
+            ជំហានបន្ទាប់ — ទំនាក់ទំនង Bunhoeut តាម Telegram ដើម្បីទទួល ABA QR Code និងអនុម័ត VIP:
+          </div>
+          <div class="success-box">
+            <div class="success-box-title">📋 Message ត្រូវបានរៀបចំរួចរាល់:</div>
+            <div class="success-box-text" id="telegram-msg-preview"></div>
+          </div>
+          <a id="telegram-btn" href="#" target="_blank" class="btn btn-tg btn-full btn-lg" style="margin-bottom:12px">
+            💬 ទំនាក់ទំនង Bunhoeut តាម Telegram →
+          </a>
+          <div style="font-family:'Noto Sans Khmer',sans-serif;font-size:13px;color:var(--muted)">
+            ការអនុម័តត្រូវបានធ្វើក្នុងរយៈពេល 24 ម៉ោង
+          </div>
+          <div class="divider"></div>
+          <a href="index.html" class="btn btn-ghost">← ត្រឡប់ទំព័រដើម</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="footer-placeholder"></div>
+<script src="app.js"></script>
+<script>
+initPage('');
+
+function selectPlan(planId) {
+  document.getElementById('f-plan').value = planId;
+  document.getElementById('register-section').scrollIntoView({behavior:'smooth'});
+  const labels = {
+    monthly: 'គម្រោងប្រចាំខែ',
+    quarterly: 'គម្រោងប្រចាំត្រីមាស',
+    yearly: 'គម្រោងប្រចាំឆ្នាំ'
+  };
+  showToast(labels[planId] + ' ត្រូវបានជ្រើសរើស ✓', 'success');
+}
+
+async function submitVIP(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submit-btn');
+  btn.textContent = 'កំពុងដំណើរការ...';
+  btn.disabled = true;
+
+  const name     = document.getElementById('f-name').value.trim();
+  const phone    = document.getElementById('f-phone').value.trim();
+  const plan     = document.getElementById('f-plan').value;
+  const password = document.getElementById('f-password').value;
+
+  const planLabels = {
+    monthly:   'គម្រោងប្រចាំខែ — ៨,០០០ រៀល (~$2)',
+    quarterly: 'គម្រោងប្រចាំត្រីមាស — ២០,០០០ រៀល (~$5)',
+    yearly:    'គម្រោងប្រចាំឆ្នាំ — ៧២,០០០ រៀល (~$18)'
+  };
+
+  const result = await DB.addUser({name, phone, facebook:'', email:'', plan, password});
+  if (result.error === 'phone_exists') {
+    showToast('លេខទូរស័ព្ទនេះបានចុះឈ្មោះរួចហើយ', 'error');
+    btn.textContent = 'ចុះឈ្មោះ VIP ឥឡូវនេះ →';
+    btn.disabled = false;
+    return;
+  }
+
+  document.getElementById('vip-form').classList.add('hidden');
+  document.getElementById('success-screen').classList.remove('hidden');
+  document.getElementById('success-name').textContent = 'សូមអរគុណ ' + name + '! 🎉';
+
+  const msg = 'ជំរាបសួរ Bunhoeut! ខ្ញុំឈ្មោះ ' + name + ', លេខទូរស័ព្ទ ' + phone + '. ខ្ញុំបានចុះឈ្មោះ ' + planLabels[plan] + '. សូមផ្ញើ QR Code ABA Pay ដើម្បីខ្ញុំអាចបង់ប្រាក់ 🙏';
+  document.getElementById('telegram-msg-preview').textContent = msg;
+  document.getElementById('telegram-btn').href = 'https://t.me/Bunhoeut?text=' + encodeURIComponent(msg);
+}
+</script>
+</body>
+</html>
