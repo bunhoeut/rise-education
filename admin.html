@@ -234,6 +234,55 @@ body { background: var(--bg); }
 
 <script src="app.js"></script>
 <script>
+// ─── GITHUB CONFIG ───────────────────
+const GITHUB = {
+  token: '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',
+  owner: 'bunhoeut',
+  repo:  'rise-education',
+  file:  'articles.json'
+};
+
+async function saveToGitHub(articles) {
+  try {
+    // Get current file SHA (needed for update)
+    const getRes = await fetch(`https://api.github.com/repos/${GITHUB.owner}/${GITHUB.repo}/contents/${GITHUB.file}`, {
+      headers: {
+        'Authorization': `token ${GITHUB.token}`,
+        'Accept': 'application/vnd.github.v3+json'
+      }
+    });
+    const fileData = await getRes.json();
+    const sha = fileData.sha;
+
+    // Update file with new content
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(articles, null, 2))));
+    const putRes = await fetch(`https://api.github.com/repos/${GITHUB.owner}/${GITHUB.repo}/contents/${GITHUB.file}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `token ${GITHUB.token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: `Update articles - ${new Date().toISOString().split('T')[0]}`,
+        content: content,
+        sha: sha
+      })
+    });
+
+    if (putRes.ok) {
+      showToast('✅ រក្សាទុកទៅ GitHub ដោយជោគជ័យ! Website updates in 60s', 'success');
+      return true;
+    } else {
+      throw new Error('GitHub save failed');
+    }
+  } catch(e) {
+    showToast('⚠️ GitHub save failed — please Export manually', 'error');
+    console.error('GitHub error:', e);
+    return false;
+  }
+}
+
 let editingId = null;
 
 function doAdminLogin(e) {
@@ -295,12 +344,15 @@ async function publishArticle() {
 
   if (editingId) {
     await DB.updateArticle(editingId, article);
-    showToast('អត្ថបទត្រូវបានកែប្រែ ✓', 'success');
+    showToast('កំពុងរក្សាទុក...', 'success');
     cancelEdit();
   } else {
     await DB.addArticle(article);
-    showToast('អត្ថបទត្រូវបានបោះពុម្ព ✓ — លេចឡើងនៅ Website ហើយ!', 'success');
+    showToast('កំពុងរក្សាទុក...', 'success');
   }
+  // Auto-save to GitHub
+  const allArticles = await DB.getArticles();
+  await saveToGitHub(allArticles);
   clearForm();
 }
 
@@ -343,7 +395,8 @@ async function editArticle(id) {
 async function deleteArticle(id) {
   if (!confirm('លុបអត្ថបទ #' + id + '? មិនអាចត្រឡប់វិញបាន!')) return;
   await DB.deleteArticle(id);
-  showToast('អត្ថបទត្រូវបានលុប', 'success');
+  const allArticles = await DB.getArticles();
+  await saveToGitHub(allArticles);
   renderManageTable();
 }
 
@@ -504,7 +557,22 @@ async function exportArticles() {
 }
 
 async function loadAllData() {
-  // Pre-load
+  // Always fetch fresh from GitHub first
+  try {
+    const res = await fetch(`https://api.github.com/repos/${GITHUB.owner}/${GITHUB.repo}/contents/${GITHUB.file}`, {
+      headers: {
+        'Authorization': `token ${GITHUB.token}`,
+        'Accept': 'application/vnd.github.v3+json'
+      }
+    });
+    const fileData = await res.json();
+    const content = decodeURIComponent(escape(atob(fileData.content.replace(/\n/g,''))));
+    const articles = JSON.parse(content);
+    localStorage.setItem('rise_articles', JSON.stringify(articles));
+    showToast('✅ ផ្ទុកអត្ថបទពី GitHub ដោយជោគជ័យ', 'success');
+  } catch(e) {
+    console.log('Loading from localStorage instead:', e);
+  }
   await DB.getArticles();
   await DB.getUsers();
 }
