@@ -49,6 +49,9 @@ body { background: var(--bg); }
     </div>
     <div style="display:flex;gap:10px;align-items:center">
       <a href="index.html" target="_blank" class="btn btn-ghost btn-sm">👁 View Site</a>
+      <button class="btn btn-sm" onclick="exportArticles()" style="background:#059669;color:#fff;font-family:'Noto Sans Khmer',sans-serif">
+        ⬇️ Export articles.json
+      </button>
       <button class="btn btn-ghost btn-sm" onclick="adminLogout()">ចាកចេញ</button>
     </div>
   </div>
@@ -485,6 +488,19 @@ async function renderStats() {
       <div style="flex:1;font-family:'Noto Sans Khmer',serif;font-size:14px">${a.title}</div>
       <span style="color:var(--orange);font-weight:700">${a.views||0} views</span>
     </div>`).join('');
+}
+
+async function exportArticles() {
+  const articles = await DB.getArticles();
+  const json = JSON.stringify(articles, null, 2);
+  const blob = new Blob([json], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'articles.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('articles.json downloaded! Upload to GitHub ✅', 'success');
 }
 
 async function loadAllData() {
