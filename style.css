@@ -6,7 +6,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;700@import url('https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap');family=Inter:wght@300;400;500;600;700@import url('https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap');display=swap');
 
 :root {
-  --bg:        #f5f6fa;
+  --bg:        #f8fafc;
   --surface:   #ffffff;
   --surface2:  #f0f2f8;
   --surface3:  #e8ebf4;
@@ -58,6 +58,17 @@ body {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
 }
+
+/* Force Noto Sans Khmer for ALL elements — prevents system font fallback */
+* { font-family: inherit; }
+input, textarea, select, button {
+  font-family: 'Noto Sans Khmer', 'Inter', sans-serif;
+}
+/* English-only elements use Inter */
+.en, [lang="en"], .plan-number, .footer-col-title,
+.nav-logo-name, .plan-name-en, .stat-num {
+  font-family: 'Inter', sans-serif;
+}
 img { max-width: 100%; display: block; }
 a { text-decoration: none; color: inherit; }
 button { cursor: pointer; font-family: inherit; border: none; background: none; }
@@ -100,7 +111,7 @@ input, textarea, select { font-family: 'Noto Sans Khmer', 'Inter', sans-serif; f
   
 }
 .nav-logo-text  { display: flex; flex-direction: column; line-height: 1; }
-.nav-logo-name  { font-family: 'Noto Sans Khmer', 'Inter', sans-serif; font-weight: 700; font-size: 15px; color: var(--text); letter-spacing: 0.04em; }
+.nav-logo-name  { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 16px; color: var(--text); letter-spacing: 0.04em; }
 .nav-logo-tagline { font-family: 'Noto Sans Khmer', 'Inter', sans-serif; font-size: 10px; margin-top: 2px; }
 .nav-logo-tagline .t-read { color: var(--read-color); }
 .nav-logo-tagline .t-sep  { color: var(--muted2); }

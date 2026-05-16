@@ -7,325 +7,298 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <style>
-/* ── Page-specific styles ── */
-.about-hero {
-  background: linear-gradient(160deg, #0f172a 0%, #1e1b4b 45%, #1e3a5f 100%);
-  padding: 64px 0 56px;
-  position: relative; overflow: hidden;
+:root {
+  --navy: #0f172a;
+  --navy-mid: #1e3a5f;
+  --gold: #d97706;
+  --gold-light: #fbbf24;
+  --surface: #ffffff;
+  --surface-2: #f8fafc;
+  --surface-3: #f1f5f9;
+  --border: #e2e8f0;
+  --text: #0f172a;
+  --text-2: #475569;
+  --text-3: #94a3b8;
 }
-.about-hero::before {
-  content: '';
-  position: absolute; top: -80px; right: -80px;
-  width: 360px; height: 360px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(217,119,6,0.1) 0%, transparent 70%);
-  pointer-events: none;
+.kh { font-family: 'Noto Sans Khmer', sans-serif; }
+.stat-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px 16px;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
 }
-.about-hero::after {
-  content: '';
-  position: absolute; bottom: -60px; left: -60px;
-  width: 260px; height: 260px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(37,99,235,0.1) 0%, transparent 70%);
-  pointer-events: none;
-}
-.gold-line { height: 3px; background: linear-gradient(90deg, transparent, #d97706, #fbbf24, #d97706, transparent); }
-.section-label {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 100px; padding: 6px 16px;
-  font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
-  font-family: 'Inter', sans-serif; color: rgba(255,255,255,0.7);
-  margin-bottom: 24px;
-}
-.stat-pill {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 12px; padding: 14px 16px;
-  text-align: center; flex: 1; min-width: 100px;
-}
-.stat-num { font-family: 'Inter', sans-serif; font-size: 26px; font-weight: 700; color: #fbbf24; line-height: 1; }
-.stat-lbl { font-family: 'Noto Sans Khmer', sans-serif; font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 4px; line-height: 1.5; }
-
 .value-card {
-  background: var(--surface);
-  border: 1px solid var(--border2);
-  border-radius: 16px; padding: 22px 20px;
-  transition: transform 0.2s, box-shadow 0.2s;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  transition: box-shadow 0.2s, transform 0.2s;
 }
-.value-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.value-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); transform: translateY(-2px); }
 .value-icon {
-  width: 44px; height: 44px; border-radius: 12px;
+  width: 48px; height: 48px; border-radius: 14px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 20px; margin-bottom: 12px;
+  font-size: 22px; margin-bottom: 14px;
 }
 .value-title {
   font-family: 'Noto Sans Khmer', sans-serif;
-  font-size: 15px; font-weight: 700; color: var(--text);
-  margin-bottom: 8px; line-height: 1.4;
+  font-size: 15px; font-weight: 700;
+  color: var(--text); margin-bottom: 8px;
 }
 .value-desc {
   font-family: 'Noto Sans Khmer', sans-serif;
-  font-size: 13px; color: var(--muted); line-height: 1.85;
-}
-
-.mission-block {
-  background: linear-gradient(135deg, #1e1b4b 0%, #1e3a5f 100%);
-  border-radius: 20px; padding: 36px 32px;
-  position: relative; overflow: hidden;
-}
-.mission-block::before {
-  content: '"';
-  position: absolute; top: -10px; left: 20px;
-  font-size: 120px; color: rgba(217,119,6,0.12);
-  font-family: 'Inter', sans-serif; line-height: 1;
-  pointer-events: none;
-}
-
-.timeline-item {
-  display: flex; gap: 16px; align-items: flex-start;
-  padding-bottom: 24px; position: relative;
-}
-.timeline-item:not(:last-child)::after {
-  content: '';
-  position: absolute; left: 19px; top: 42px;
-  width: 2px; height: calc(100% - 16px);
-  background: linear-gradient(to bottom, #d97706, rgba(217,119,6,0.1));
+  font-size: 13px; color: var(--text-2); line-height: 1.85;
 }
 .timeline-dot {
   width: 40px; height: 40px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-size: 16px; flex-shrink: 0;
-  border: 2px solid rgba(217,119,6,0.4);
-  background: rgba(217,119,6,0.1);
+  background: var(--surface-3);
+  border: 1.5px solid var(--border);
 }
-.timeline-content { flex: 1; padding-top: 4px; }
-.timeline-title {
-  font-family: 'Noto Sans Khmer', sans-serif;
-  font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px;
-}
-.timeline-desc {
-  font-family: 'Noto Sans Khmer', sans-serif;
-  font-size: 13px; color: var(--muted); line-height: 1.85;
-}
-
 .social-btn {
   display: inline-flex; align-items: center; gap: 8px;
   padding: 10px 18px; border-radius: 10px;
   font-size: 13px; font-family: 'Noto Sans Khmer', sans-serif;
-  font-weight: 600; text-decoration: none;
-  transition: all 0.2s;
+  font-weight: 600; text-decoration: none; transition: all 0.2s;
+}
+.gold-accent { color: var(--gold); }
+.section-eyebrow {
+  font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  font-family: 'Inter', sans-serif; color: var(--gold);
+  margin-bottom: 10px; font-weight: 600;
 }
 </style>
 </head>
-<body>
+<body style="background:#f8fafc;margin:0">
 <div id="nav-placeholder"></div>
 
-<!-- ══ HERO ══ -->
-<div class="about-hero">
-  <div class="gold-line"></div>
-  <div class="container-sm" style="position:relative;z-index:1;padding-top:0">
-    <div style="text-align:center;padding-top:48px">
-      <div class="section-label">✦ អំពីយើង · About Rise Education</div>
-      <h1 style="font-family:'Noto Sans Khmer',sans-serif;font-size:clamp(26px,5vw,44px);font-weight:700;color:#fff;line-height:1.25;margin-bottom:16px">
-        វេទិកាឈានមុខ<br><span style="color:#fbbf24">សម្រាប់យុវជនខ្មែរ</span>
-      </h1>
-      <p style="font-family:'Noto Sans Khmer',sans-serif;font-size:15px;color:rgba(255,255,255,0.72);line-height:1.9;max-width:500px;margin:0 auto 32px">
-        Rise Education បង្កើតឡើងដើម្បីបំពេញចន្លោះខ្វះខាត នៃចំណេះដឹងដែលសាលាមិនបានបង្រៀន — ហើយចែករំលែកវា ជាភាសាខ្មែរ ដល់យុវជនគ្រប់រូប
-      </p>
-
-      <!-- Stats row -->
-      <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;max-width:440px;margin:0 auto">
-        <div class="stat-pill">
-          <div class="stat-num">20+</div>
-          <div class="stat-lbl">ឆ្នាំបទពិសោធន៍<br>ស្ថាបនិក</div>
-        </div>
-        <div class="stat-pill">
-          <div class="stat-num">6</div>
-          <div class="stat-lbl">ប្រធានបទ<br>ចំណេះដឹង</div>
-        </div>
-        <div class="stat-pill">
-          <div class="stat-num">100%</div>
-          <div class="stat-lbl">ជាភាសា<br>ខ្មែរ</div>
-        </div>
-        <div class="stat-pill">
-          <div class="stat-num">FREE</div>
-          <div class="stat-lbl">អត្ថបទ<br>ឥតគិតថ្លៃ</div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="gold-line" style="margin-top:48px"></div>
-</div>
-
-<!-- ══ MISSION & VISION ══ -->
-<section style="padding:56px 0 48px;background:var(--bg)">
+<!-- HERO — Apple style: clean, light, centered -->
+<section style="background:#fff;border-bottom:1px solid #e2e8f0;padding:48px 0 40px;text-align:center">
   <div class="container-sm">
-
-    <div style="text-align:center;margin-bottom:36px">
-      <div style="display:inline-flex;align-items:center;gap:6px;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);font-family:'Inter',sans-serif;margin-bottom:10px">
-        ✦ បេសកកម្ម និងចក្ខុវិស័យ
+    <div class="section-eyebrow">✦ អំពីយើង · About Rise Education</div>
+    <h1 style="font-family:'Noto Sans Khmer',sans-serif;font-size:clamp(26px,5vw,42px);font-weight:700;color:#0f172a;line-height:1.25;margin-bottom:12px">
+      វេទិកាឈានមុខ<br><span style="color:#d97706">សម្រាប់យុវជនខ្មែរ</span>
+    </h1>
+    <p style="font-family:'Noto Sans Khmer',sans-serif;font-size:15px;color:#475569;line-height:1.9;max-width:480px;margin:0 auto 32px">
+      Rise Education បង្កើតឡើងដើម្បីបំពេញចន្លោះ នៃចំណេះដឹងដែលសាលាមិនបានបង្រៀន — ជាភាសាខ្មែរ ដល់យុវជនគ្រប់រូប
+    </p>
+    <!-- Stats row -->
+    <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;max-width:440px;margin:0 auto">
+      <div class="stat-card" style="flex:1;min-width:90px">
+        <div style="font-family:'Inter',sans-serif;font-size:26px;font-weight:700;color:#d97706;line-height:1">20+</div>
+        <div style="font-family:'Noto Sans Khmer',sans-serif;font-size:11px;color:#94a3b8;margin-top:4px;line-height:1.5">ឆ្នាំបទពិសោធន៍</div>
       </div>
-      <h2 style="font-family:'Noto Sans Khmer',sans-serif;font-size:clamp(20px,4vw,30px);font-weight:700;margin-bottom:0">
-        ហេតុអ្វី Rise Education?
-      </h2>
-    </div>
-
-    <!-- Mission block -->
-    <div class="mission-block" style="margin-bottom:24px">
-      <div style="position:relative;z-index:1">
-        <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#fbbf24;font-family:'Inter',sans-serif;margin-bottom:12px">MISSION · បេសកកម្ម</div>
-        <p style="font-family:'Noto Sans Khmer',sans-serif;font-size:16px;color:rgba(255,255,255,0.9);line-height:1.9;margin-bottom:16px">
-          ផ្តល់មេរៀន<strong style="color:#fbbf24">អភិវឌ្ឍខ្លួន</strong> ជំនាញជីវិត និងចំណេះដឹង<strong style="color:#fbbf24">ហិរញ្ញវត្ថុ</strong> ជាភាសាខ្មែរដែលងាយយល់ ដើម្បីជួយយុវជនខ្មែរឈានទៅ<strong style="color:#fbbf24">ជោគជ័យ</strong>ក្នុងជីវិត និងអាជីពការងារ។
-        </p>
-        <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#fbbf24;font-family:'Inter',sans-serif;margin-bottom:12px">VISION · ចក្ខុវិស័យ</div>
-        <p style="font-family:'Noto Sans Khmer',sans-serif;font-size:15px;color:rgba(255,255,255,0.75);line-height:1.9;margin:0">
-          ក្លាយជា<strong style="color:#fff">វេទិកាឈានមុខ</strong>នៅកម្ពុជា ក្នុងការបណ្តុះបណ្តាលចំណេះដឹងជាក់ស្តែង សម្រាប់យុវជនវៃឆ្លាត និងមានឯករាជ្យភាព — ដែលអាច<strong style="color:#fbbf24">យកទៅអនុវត្តបានភ្លាមៗ</strong>។
-        </p>
+      <div class="stat-card" style="flex:1;min-width:90px">
+        <div style="font-family:'Inter',sans-serif;font-size:26px;font-weight:700;color:#d97706;line-height:1">6</div>
+        <div style="font-family:'Noto Sans Khmer',sans-serif;font-size:11px;color:#94a3b8;margin-top:4px;line-height:1.5">ប្រធានបទ</div>
       </div>
-    </div>
-
-    <!-- Core values grid 2×2 -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
-
-      <div class="value-card">
-        <div class="value-icon" style="background:rgba(217,119,6,0.1);border:1px solid rgba(217,119,6,0.2)">📚</div>
-        <div class="value-title">ការរៀនឥតឈប់ឈរ</div>
-        <div class="value-desc">Lifelong Learning — ចំណេះដឹងគ្មានដំណប់ ហើយការរៀននឹងមិនចប់បន្ទាប់ពីបញ្ចប់ការសិក្សាទេ</div>
+      <div class="stat-card" style="flex:1;min-width:90px">
+        <div style="font-family:'Inter',sans-serif;font-size:26px;font-weight:700;color:#d97706;line-height:1">100%</div>
+        <div style="font-family:'Noto Sans Khmer',sans-serif;font-size:11px;color:#94a3b8;margin-top:4px;line-height:1.5">ភាសាខ្មែរ</div>
       </div>
-
-      <div class="value-card">
-        <div class="value-icon" style="background:rgba(37,99,235,0.1);border:1px solid rgba(37,99,235,0.2)">⚡</div>
-        <div class="value-title">ភាពជាក់ស្តែង</div>
-        <div class="value-desc">Practicality — គ្រប់មេរៀនត្រូវបានរៀបចំ ឱ្យអាចយកទៅប្រើប្រាស់បានភ្លាមៗក្នុងជីវិតពិត</div>
+      <div class="stat-card" style="flex:1;min-width:90px">
+        <div style="font-family:'Inter',sans-serif;font-size:22px;font-weight:700;color:#d97706;line-height:1">FREE</div>
+        <div style="font-family:'Noto Sans Khmer',sans-serif;font-size:11px;color:#94a3b8;margin-top:4px;line-height:1.5">អត្ថបទ</div>
       </div>
-
-      <div class="value-card">
-        <div class="value-icon" style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2)">🇰🇭</div>
-        <div class="value-title">ភាសាខ្មែររបស់យើង</div>
-        <div class="value-desc">ខ្លឹមសារជាភាសាខ្មែរ ត្រូវបានបង្កើតឡើងស្រប ជាមួយវប្បធម៌ និងបរិបទសង្គម​ខ្មែរ</div>
-      </div>
-
-      <div class="value-card">
-        <div class="value-icon" style="background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.2)">🎯</div>
-        <div class="value-title">ផ្តោតលើការអភិវឌ្ឍ</div>
-        <div class="value-desc">Soft Skills, Financial Literacy, Growth Mindset — ចំណេះដឹងដែល​ស្ថានប័​ន​មិន​បាន​បង្រៀន</div>
-      </div>
-
     </div>
   </div>
 </section>
 
-<!-- ══ FOUNDER ══ -->
-<section style="padding:0 0 56px;background:var(--bg)">
+<!-- MISSION & VISION — clean cards -->
+<section style="padding:48px 0;background:#f8fafc">
   <div class="container-sm">
-    <div style="background:linear-gradient(160deg,#0f172a 0%,#1e1b4b 50%,#1e3a5f 100%);border-radius:24px;overflow:hidden">
-      <div class="gold-line"></div>
+    <div style="text-align:center;margin-bottom:32px">
+      <div class="section-eyebrow">✦ បេសកកម្ម និងចក្ខុវិស័យ</div>
+      <h2 style="font-family:'Noto Sans Khmer',sans-serif;font-size:clamp(20px,4vw,28px);font-weight:700;color:#0f172a">ហេតុអ្វី Rise Education?</h2>
+    </div>
 
-      <div style="padding:36px 28px">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px">
+      <!-- Mission -->
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:20px;padding:28px 24px;box-shadow:0 1px 4px rgba(0,0,0,0.06);border-top:3px solid #d97706">
+        <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#d97706;font-family:'Inter',sans-serif;font-weight:600;margin-bottom:12px">MISSION</div>
+        <div style="font-family:'Noto Sans Khmer',sans-serif;font-size:14px;color:#0f172a;line-height:1.9">
+          ផ្តល់មេរៀន<strong>អភិវឌ្ឍខ្លួន</strong> ជំនាញជីវិត និងចំណេះដឹង<strong>ហិរញ្ញវត្ថុ</strong> ជាភាសាខ្មែរ ដើម្បីឈានទៅ<strong style="color:#d97706">ជោគជ័យ</strong>ក្នុងអាជីព។
+        </div>
+      </div>
+      <!-- Vision -->
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:20px;padding:28px 24px;box-shadow:0 1px 4px rgba(0,0,0,0.06);border-top:3px solid #0f172a">
+        <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#0f172a;font-family:'Inter',sans-serif;font-weight:600;margin-bottom:12px">VISION</div>
+        <div style="font-family:'Noto Sans Khmer',sans-serif;font-size:14px;color:#0f172a;line-height:1.9">
+          ក្លាយជា<strong>វេទិកាឈានមុខ</strong>នៅកម្ពុជា ក្នុងការបណ្តុះបណ្តាលចំណេះដឹងជាក់ស្តែង ដែលអាច<strong style="color:#d97706">យកទៅអនុវត្តបានភ្លាមៗ</strong>។
+        </div>
+      </div>
+    </div>
+
+    <!-- Values 2x2 -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+      <div class="value-card">
+        <div class="value-icon" style="background:#fef3c7">📚</div>
+        <div class="value-title">ការរៀនឥតឈប់ឈរ</div>
+        <div class="value-desc">Lifelong Learning — ចំណេះដឹងគ្មានដំណប់ ការរៀនមិនចប់ក្រោយបញ្ចប់ការសិក្សា</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon" style="background:#eff6ff">⚡</div>
+        <div class="value-title">ភាពជាក់ស្តែង</div>
+        <div class="value-desc">Practicality — គ្រប់មេរៀនអាចយកទៅប្រើប្រាស់បានភ្លាមៗក្នុងជីវិតពិត</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon" style="background:#f0fdf4">🌐</div>
+        <div class="value-title">ភាសាខ្មែររបស់យើង</div>
+        <div class="value-desc">ខ្លឹមសារជាភាសាខ្មែរ ស្របជាមួយវប្បធម៌ និងបរិបទសង្គមខ្មែរ</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon" style="background:#fdf4ff">🎯</div>
+        <div class="value-title">ផ្តោតលើការអភិវឌ្ឍ</div>
+        <div class="value-desc">Soft Skills, Financial Literacy, Growth Mindset — ចំណេះដឹងដែលស្ថាប័នមិនបានបង្រៀន</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDER — clean Apple card style -->
+<section style="padding:0 0 48px;background:#f8fafc">
+  <div class="container-sm">
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:24px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+
+      <!-- Gold top accent -->
+      <div style="height:3px;background:linear-gradient(90deg,#d97706,#fbbf24,#d97706)"></div>
+
+      <div style="padding:32px 28px">
         <!-- Label -->
-        <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,195,0,0.8);font-family:'Inter',sans-serif;margin-bottom:20px">✦ ស្ថាបនិក · Founder</div>
+        <div class="section-eyebrow">✦ ស្ថាបនិក · Founder</div>
 
-        <!-- Photo + name row -->
+        <!-- Photo + name -->
         <div style="display:flex;align-items:center;gap:20px;margin-bottom:24px;flex-wrap:wrap">
-          <div id="founder-photo" style="width:88px;height:88px;border-radius:50%;overflow:hidden;border:2px solid #d97706;box-shadow:0 0 0 5px rgba(217,119,6,0.15);flex-shrink:0"></div>
+          <div id="founder-photo" style="width:80px;height:80px;border-radius:50%;overflow:hidden;border:2px solid #e2e8f0;flex-shrink:0"></div>
           <div>
-            <div style="font-family:'Inter',sans-serif;font-size:clamp(18px,4vw,26px);font-weight:700;color:#fff;line-height:1.1;margin-bottom:4px">PHIN BUNHOEUT</div>
-            <div style="font-family:'Noto Sans Khmer',sans-serif;font-size:14px;color:#fbbf24;font-weight:600;margin-bottom:4px">លោក ភិន ប៊ុនហឿត, MBA</div>
-            <div style="font-family:'Noto Sans Khmer',sans-serif;font-size:12px;color:rgba(255,255,255,0.5)">🇰🇭 Battambang, Cambodia</div>
+            <div style="font-family:'Inter',sans-serif;font-size:clamp(18px,3vw,24px);font-weight:700;color:#0f172a;line-height:1.1;margin-bottom:3px">PHIN BUNHOEUT</div>
+            <div style="font-family:'Noto Sans Khmer',sans-serif;font-size:14px;color:#d97706;font-weight:600;margin-bottom:3px">លោក ភិន ប៊ុនហឿត, MBA</div>
+            <div style="font-family:'Noto Sans Khmer',sans-serif;font-size:12px;color:#94a3b8">🇰🇭 បាត់ដំបង, កម្ពុជា (Battambang, Cambodia)</div>
           </div>
         </div>
 
-        <!-- Divider -->
-        <div style="height:1px;background:rgba(255,255,255,0.1);margin-bottom:24px"></div>
+        <div style="height:1px;background:#f1f5f9;margin-bottom:20px"></div>
 
-        <!-- Timeline of experience -->
-        <div style="margin-bottom:24px">
-          <div style="font-family:'Noto Sans Khmer',sans-serif;font-size:13px;font-weight:700;color:rgba(255,255,255,0.5);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:18px">បទពិសោធន៍</div>
+        <!-- Timeline items — polished Khmer -->
+        <div style="display:flex;flex-direction:column;gap:18px;margin-bottom:24px">
 
-          <div class="timeline-item">
+          <div style="display:flex;gap:14px;align-items:flex-start">
             <div class="timeline-dot">🎯</div>
-            <div class="timeline-content">
-              <div class="timeline-title" style="color:#fff">ចំណង់ចំណូលចិត្ត</div>
-              <div class="timeline-desc" style="color:rgba(255,255,255,0.65)">ចំណង់ចំណូលចិត្តខ្ពស់ ក្នុងការអភិវឌ្ឍធនធានមនុស្ស ការចែករំលែកចំណេះដឹង Soft Skills, Financial Literacy និងជំនាញជីវិត ដល់យុវជន</div>
+            <div>
+              <div style="font-family:'Noto Sans Khmer',sans-serif;font-size:14px;font-weight:700;color:#0f172a;margin-bottom:4px">
+                បេសកកម្ម និងចំណង់ចំណូលចិត្ត
+              </div>
+              <div style="font-family:'Noto Sans Khmer',sans-serif;font-size:13px;color:#475569;line-height:1.85">
+                ចែករំលែកចំណេះដឹងផ្នែក<strong style="color:#0f172a">ជំនាញទន់ (Soft Skills)</strong> ការអភិវឌ្ឍខ្លួន (Personal Growth) និងជំនាញជីវិត ដល់យុវជនកម្ពុជា
+              </div>
             </div>
           </div>
 
-          <div class="timeline-item">
+          <div style="display:flex;gap:14px;align-items:flex-start">
             <div class="timeline-dot">💼</div>
-            <div class="timeline-content">
-              <div class="timeline-title" style="color:#fff">Head of Operations · Pong Morakot Co., Ltd</div>
-              <div class="timeline-desc" style="color:rgba(255,255,255,0.65)">ទទួលខុសត្រូវលើការដឹកនាំប្រតិបត្តិការ ការគ្រប់គ្រងក្រុមការងារ និងការអភិវឌ្ឍអង្គភាព</div>
+            <div>
+              <div style="font-family:'Noto Sans Khmer',sans-serif;font-size:14px;font-weight:700;color:#0f172a;margin-bottom:4px">
+                បទពិសោធន៍ការងារ
+              </div>
+              <div style="font-family:'Noto Sans Khmer',sans-serif;font-size:13px;color:#475569;line-height:1.85">
+                ប្រធានផ្នែកប្រតិបត្តិការ (Head of Operations) · Pong Morakot Co., Ltd<br>
+                អ្នកគ្រប់គ្រងសាខា (Branch Manager) · Manulife Cambodia អស់រយៈពេលជិត <strong style="color:#d97706">៩ ឆ្នាំ</strong>
+              </div>
             </div>
           </div>
 
-          <div class="timeline-item">
-            <div class="timeline-dot">🏦</div>
-            <div class="timeline-content">
-              <div class="timeline-title" style="color:#fff">Branch Office Manager · Manulife Cambodia</div>
-              <div class="timeline-desc" style="color:rgba(255,255,255,0.65)">ជិត ៩ ឆ្នាំ ក្នុងការដឹកនាំ គ្រប់គ្រងប្រតិបត្តិការ និងអភិវឌ្ឍក្រុមការងារ</div>
-            </div>
-          </div>
-
-          <div class="timeline-item" style="padding-bottom:0">
+          <div style="display:flex;gap:14px;align-items:flex-start">
             <div class="timeline-dot">🎓</div>
-            <div class="timeline-content">
-              <div class="timeline-title" style="color:#fff">ការអប់រំ</div>
-              <div class="timeline-desc" style="color:rgba(255,255,255,0.65)">MBA — General Management, BBU (២០០៩) · BBA — NUM (២០០៤) · បទពិសោធន៍ជាង <strong style="color:#fbbf24">២០ ឆ្នាំ</strong> ក្នុងវិស័យប្រតិបត្តិការ និងការដឹកនាំ</div>
+            <div>
+              <div style="font-family:'Noto Sans Khmer',sans-serif;font-size:14px;font-weight:700;color:#0f172a;margin-bottom:4px">
+                កម្រិតវប្បធម៌ និងបទពិសោធន៍
+              </div>
+              <div style="font-family:'Noto Sans Khmer',sans-serif;font-size:13px;color:#475569;line-height:1.85">
+                សញ្ញាបត្រអនុបណ្ឌិត (MBA) · សាកលវិទ្យាល័យបៀលប្រាយ (BBU) ឆ្នាំ ២០០៩<br>
+                សញ្ញាបត្របរិញ្ញាបត្រ (BBA) · សាកលវិទ្យាល័យភូមិន្ទនីតិសាស្ត្រ (NUM) ឆ្នាំ ២០០៤<br>
+                មានបទពិសោធន៍ការងារជាង <strong style="color:#d97706">២០ ឆ្នាំ</strong> ក្នុងផ្នែកប្រតិបត្តិការ និងការដឹកនាំ
+              </div>
             </div>
           </div>
+
         </div>
 
-        <!-- Quote -->
-        <div style="background:rgba(255,255,255,0.05);border-left:3px solid #d97706;border-radius:0 12px 12px 0;padding:16px 18px;margin-bottom:24px">
-          <p style="font-family:'Noto Sans Khmer',sans-serif;font-size:14px;color:rgba(255,255,255,0.85);line-height:1.9;margin:0;font-style:italic">
-            "ខ្ញុំបានបង្កើត Rise Education ព្រោះខ្ញុំជឿជាក់ថា ការ<strong style="color:#fbbf24">ជោគជ័យ</strong>ក្នុងជីវិតមិនអាស្រ័យតែលើសញ្ញាបត្រទេ — វាអាស្រ័យលើ<strong style="color:#fbbf24">ជំនាញ ចំណេះដឹង និងការអភិវឌ្ឍខ្លួន</strong>ឥតឈប់ឈរ។"
+        <!-- Quote — polished -->
+        <div style="background:#f8fafc;border-left:3px solid #d97706;border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:24px">
+          <p style="font-family:'Noto Sans Khmer',sans-serif;font-size:14px;color:#0f172a;line-height:1.95;margin:0;font-style:italic">
+            "ខ្ញុំបង្កើត Rise Education ឡើង ក្រោមជំនឿចិត្តថា <strong style="color:#d97706">ភាពជោគជ័យ</strong>ក្នុងជីវិត គឺអាស្រ័យទៅលើ<strong>ជំនាញ ចំណេះដឹង និងការអភិវឌ្ឍខ្លួន</strong>ជាប្រចាំ ដោយឥតឈប់ឈរ។"
           </p>
-          <div style="font-size:12px;color:rgba(255,255,255,0.35);margin-top:10px;font-family:'Inter',sans-serif">— Phin Bunhoeut, MBA · Founder, Rise Education</div>
+          <div style="font-size:12px;color:#94a3b8;margin-top:10px;font-family:'Noto Sans Khmer',sans-serif">— ភិន ប៊ុនហឿត, MBA · ស្ថាបនិក Rise Education</div>
         </div>
 
         <!-- Social buttons -->
         <div style="display:flex;gap:10px;flex-wrap:wrap">
-          <a href="https://t.me/Bunhoeut" target="_blank" class="social-btn" style="background:#229ED9;color:#fff">
-            💬 @Bunhoeut Telegram
-          </a>
-          <a href="https://www.facebook.com/RiseEducationX" target="_blank" class="social-btn" style="background:#1877F2;color:#fff">
-            📘 Facebook Page
-          </a>
-          <a href="https://www.youtube.com/@RiseEducationX" target="_blank" class="social-btn" style="background:#FF0000;color:#fff">
-            ▶ YouTube
-          </a>
+          <a href="https://t.me/Bunhoeut" target="_blank" class="social-btn" style="background:#229ED9;color:#fff">💬 @Bunhoeut</a>
+          <a href="https://www.facebook.com/RiseEducationX" target="_blank" class="social-btn" style="background:#1877F2;color:#fff">📘 Facebook</a>
+          <a href="https://www.youtube.com/@RiseEducationX" target="_blank" class="social-btn" style="background:#FF0000;color:#fff">▶ YouTube</a>
         </div>
       </div>
-
-      <div class="gold-line"></div>
     </div>
   </div>
 </section>
 
-<!-- ══ CTA ══ -->
-<section style="padding:0 0 64px;background:var(--bg)">
+<!-- CTA — Upgraded with compelling copy -->
+<section style="padding:0 0 56px;background:#f8fafc">
   <div class="container-sm">
-    <div style="background:var(--surface);border:1px solid var(--border2);border-radius:20px;padding:36px 28px;text-align:center">
-      <div style="font-size:32px;margin-bottom:14px">🚀</div>
-      <h2 style="font-family:'Noto Sans Khmer',sans-serif;font-size:clamp(18px,4vw,26px);font-weight:700;margin-bottom:12px">
-        ចាប់ផ្តើមរៀន ហើយរីកចម្រើនជាមួយគ្នា
-      </h2>
-      <p style="font-family:'Noto Sans Khmer',sans-serif;font-size:14px;color:var(--muted);line-height:1.9;max-width:400px;margin:0 auto 24px">
-        ចូលរួមជាមួយសហគមន៍អ្នករៀន Rise Education — ឥតគិតថ្លៃ ហើយ VIP ចាប់ពី ៨,០០០ រៀល/ខែ
-      </p>
-      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-        <a href="index.html#articles" style="display:inline-flex;align-items:center;gap:8px;background:var(--orange);color:#fff;border-radius:10px;padding:12px 22px;font-size:14px;font-family:'Noto Sans Khmer',sans-serif;font-weight:600;text-decoration:none;transition:opacity 0.2s" onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">
-          ចាប់ផ្តើមអានឥឡូវនេះ →
-        </a>
-        <a href="vip-join.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:#fff;border-radius:10px;padding:12px 22px;font-size:14px;font-family:'Noto Sans Khmer',sans-serif;font-weight:600;text-decoration:none;transition:opacity 0.2s" onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">
-          ⭐ ចូលរួម VIP
-        </a>
-      </div>
+    <div style="background:linear-gradient(160deg,#0f172a 0%,#1e2d4a 100%);border-radius:24px;overflow:hidden;position:relative">
 
-      <!-- Contact info -->
-      <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:12px;justify-content:center;font-family:'Noto Sans Khmer',sans-serif;font-size:13px;color:var(--muted)">
-        <a href="mailto:bunhoeut@gmail.com" style="color:var(--accent);text-decoration:none">📧 bunhoeut@gmail.com</a>
-        <span>📱 +855 98 975 555</span>
-        <a href="https://t.me/RiseEducationX" target="_blank" style="color:var(--tg);text-decoration:none">✈ Telegram Group</a>
+      <!-- Subtle gold top line -->
+      <div style="height:3px;background:linear-gradient(90deg,#d97706,#fbbf24,#d97706)"></div>
+
+      <div style="padding:40px 28px;text-align:center;position:relative;z-index:1">
+
+        <!-- Icons -->
+        <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:20px">
+          <span style="font-size:36px">🚀</span>
+          <span style="font-size:28px">⭐</span>
+        </div>
+
+        <!-- Main headline -->
+        <h2 style="font-family:'Noto Sans Khmer',sans-serif;font-size:clamp(18px,4vw,26px);font-weight:700;color:#fff;line-height:1.45;margin-bottom:16px">
+          ត្រៀមខ្លួនរួចរាល់ហើយឬនៅ<br>
+          <span style="color:#fbbf24">ក្នុងការផ្លាស់ប្តូរជីវិត និងអាជីពរបស់អ្នក?</span>
+        </h2>
+
+        <!-- Incentive text -->
+        <p style="font-family:'Noto Sans Khmer',sans-serif;font-size:14px;color:rgba(255,255,255,0.72);line-height:1.9;max-width:460px;margin:0 auto 28px">
+          ចូលរួមជាមួយ Rise Education VIP ដើម្បីទទួលបានមេរៀន ដែលសាលាមិនបានបង្រៀន និងបណ្ណាល័យឯកសារ<strong style="color:#fbbf24">ជោគជ័យ</strong>គ្មានដែនកំណត់។
+        </p>
+
+        <!-- Price badge -->
+        <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:100px;padding:7px 18px;font-family:'Noto Sans Khmer',sans-serif;font-size:13px;color:rgba(255,255,255,0.75);margin-bottom:24px">
+          ☕ ចាប់ពី <strong style="color:#fbbf24">៨,០០០ រៀល/ខែ</strong> · អាចបញ្ឈប់បានគ្រប់ពេល
+        </div>
+
+        <!-- Primary CTA button -->
+        <div style="margin-bottom:16px">
+          <a href="vip-join.html" style="display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#d97706,#f59e0b);color:#fff;border-radius:14px;padding:15px 32px;font-size:15px;font-weight:700;font-family:'Noto Sans Khmer',sans-serif;text-decoration:none;box-shadow:0 4px 20px rgba(217,119,6,0.4);transition:all 0.2s" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 24px rgba(217,119,6,0.5)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 4px 20px rgba(217,119,6,0.4)'">
+            ⭐ ចូលរួមជាមួយគ្រួសារ VIP ឥឡូវនេះ
+          </a>
+        </div>
+
+        <!-- Secondary link -->
+        <div style="margin-bottom:24px">
+          <a href="index.html#articles" style="font-family:'Noto Sans Khmer',sans-serif;font-size:13px;color:rgba(255,255,255,0.5);text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.2);padding-bottom:2px" onmouseover="this.style.color='rgba(255,255,255,0.8)'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">
+            ឬអានអត្ថបទឥតគិតថ្លៃជាមុនសិន →
+          </a>
+        </div>
+
+        <!-- Contact row -->
+        <div style="padding-top:20px;border-top:1px solid rgba(255,255,255,0.08);display:flex;flex-wrap:wrap;gap:16px;justify-content:center;font-family:'Noto Sans Khmer',sans-serif;font-size:13px">
+          <a href="mailto:bunhoeut@gmail.com" style="color:rgba(255,255,255,0.45);text-decoration:none" onmouseover="this.style.color='#60a5fa'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">📧 bunhoeut@gmail.com</a>
+          <span style="color:rgba(255,255,255,0.45)">📱 +855 98 975 555</span>
+          <a href="https://t.me/RiseEducationX" target="_blank" style="color:rgba(255,255,255,0.45);text-decoration:none" onmouseover="this.style.color='#60a5fa'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">✈ Telegram Group</a>
+        </div>
+
       </div>
     </div>
   </div>
@@ -335,18 +308,12 @@
 <script src="app.js"></script>
 <script>
 initPage('about');
-
-// Load founder photo
 const wrap = document.getElementById('founder-photo');
 if (wrap) {
   const img = new Image();
   img.src = 'bunhoeut-photo.png';
-  img.onload = () => {
-    wrap.innerHTML = '<img src="bunhoeut-photo.png" style="width:100%;height:100%;object-fit:cover">';
-  };
-  img.onerror = () => {
-    wrap.innerHTML = '<div style="width:100%;height:100%;background:linear-gradient(135deg,#1e3a5f,#312e81);display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:700;color:#fbbf24">B</div>';
-  };
+  img.onload = () => { wrap.innerHTML = '<img src="bunhoeut-photo.png" style="width:100%;height:100%;object-fit:cover">'; };
+  img.onerror = () => { wrap.innerHTML = '<div style="width:100%;height:100%;background:#d97706;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:#fff">B</div>'; };
 }
 </script>
 </body>

@@ -283,7 +283,7 @@ function buildNav(activePage = '') {
   <nav class="nav">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo">
-        <img src="logo.png" alt="Rise Education" style="height:38px;width:auto;object-fit:contain;display:block" onerror="this.style.display='none'">
+        <img src="logo.png" alt="Rise Education" style="height:46px;width:auto;object-fit:contain;display:block" onerror="this.style.display='none'">
         <div class="nav-logo-text">
           <span style="font-family:'Noto Sans Khmer','Inter',sans-serif;font-weight:700;font-size:15px;color:var(--text);letter-spacing:0.04em">RISE EDUCATION</span>
           <span style="font-family:'Noto Sans Khmer',sans-serif;font-size:10px;margin-top:2px">
