@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ចូលគណនី — Rise Education</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="nav-placeholder"></div>
+
+<main style="min-height:70vh;display:flex;align-items:center;justify-content:center;padding:40px 20px">
+  <div style="width:100%;max-width:420px">
+    <div style="text-align:center;margin-bottom:32px">
+      <img src="logo.png" alt="Rise Education" style="height:56px;margin:0 auto 16px" onerror="this.style.display='none'">
+      <h1 style="font-size:24px;margin-bottom:6px">ចូលគណនី VIP</h1>
+      <p style="font-family:'Noto Sans Khmer',serif;color:var(--muted);font-size:14px">
+        ចូល account VIP របស់អ្នក ដើម្បីអានខ្លឹមសារ ⭐ ពិសេស
+      </p>
+    </div>
+
+    <div class="card" style="padding:28px">
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('login')">ចូលគណនី</button>
+        <button class="tab-btn" onclick="switchTab('register')">ចុះឈ្មោះ</button>
+      </div>
+
+      <!-- LOGIN TAB -->
+      <div class="tab-content active" id="tab-login">
+        <form onsubmit="doLogin(event)">
+          <div class="form-group">
+            <label class="form-label">លេខទូរស័ព្ទ <span class="req">*</span></label>
+            <input type="tel" class="form-input" id="login-phone" placeholder="0XX-XXX-XXX" required>
+            <div class="form-hint">ប្រើលេខទូរស័ព្ទដែលបានចុះឈ្មោះ</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password <span style="color:var(--muted2)">(ស្រេចចិត្ត)</span></label>
+            <input type="password" class="form-input" id="login-password" placeholder="ទុកទំនេរ ប្រសិនបើមិនមាន Password">
+            <div class="form-hint">💡 គ្មាន Password? ទុកទំនេរ ហើយចុចចូលគណនីបាន</div>
+          </div>
+          <div class="form-error" id="login-error">លេខទូរស័ព្ទ ឬ Password មិនត្រឹមត្រូវ</div>
+          <button type="submit" class="btn btn-primary btn-full btn-lg" style="margin-top:8px">ចូលគណនី →</button>
+        </form>
+
+        <div class="divider"></div>
+
+        <div style="text-align:center;font-family:'Noto Sans Khmer',serif;font-size:13px;color:var(--muted)">
+          ភ្លេច access? ទំនាក់ទំនង
+          <a href="https://t.me/Bunhoeut" target="_blank" style="color:var(--cyan)">@Bunhoeut តាម Telegram</a>
+        </div>
+      </div>
+
+      <!-- REGISTER TAB -->
+      <div class="tab-content" id="tab-register">
+        <div style="text-align:center;padding:20px 0">
+          <div style="font-size:44px;margin-bottom:14px">⭐</div>
+          <div style="font-family:'Noto Sans Khmer',sans-serif;font-size:17px;font-weight:700;margin-bottom:10px;color:var(--text);line-height:1.4">
+            ត្រៀមខ្លួនក្លាយជាសមាជិក VIP<br>របស់ Rise Education!
+          </div>
+          <div style="font-family:'Noto Sans Khmer',sans-serif;font-size:13px;color:var(--muted);line-height:1.9;margin-bottom:20px">
+            ចូលរួមជាមួយសហគមន៍យើង ដើម្បីទទួលបានចំណេះដឹង និងបទពិសោធន៍ពិសេសៗ ដែលនឹងជួយឱ្យអ្នក<strong style="color:var(--text)">រីកចម្រើនលើសពីការរំពឹងទុក</strong>។ ការចុះឈ្មោះងាយៗ នឹងបើកទ្វារ ឆ្ពោះទៅរក<strong style="color:var(--text)">ឱកាសថ្មីៗ</strong>សម្រាប់អនាគតរបស់អ្នក។
+          </div>
+          <a href="vip-join.html" class="btn btn-gold btn-full btn-lg" style="font-family:'Noto Sans Khmer',sans-serif">
+            ចាប់ផ្តើមដំណើរការចុះឈ្មោះនៅទីនេះ →
+          </a>
+          <div style="margin-top:14px;font-size:12px;color:var(--muted2);font-family:'Noto Sans Khmer',sans-serif;line-height:1.7">
+            ចាប់ពី ៨,០០០ រៀល/ខែ · អាចបញ្ឈប់បានគ្រប់ពេល
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:20px;font-family:'Noto Sans Khmer',serif;font-size:13px;color:var(--muted)">
+      មិនទាន់ជា VIP?
+      <a href="vip-join.html" style="color:var(--gold)">ចូលរួម VIP →</a>
+    </div>
+  </div>
+</main>
+
+<div id="footer-placeholder"></div>
+
+<script src="app.js"></script>
+<script>
+initPage('');
+
+function switchTab(name) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => {
+    b.classList.toggle('active', (i===0 && name==='login') || (i===1 && name==='register'));
+  });
+  document.getElementById('tab-login').classList.toggle('active', name==='login');
+  document.getElementById('tab-register').classList.toggle('active', name==='register');
+}
+
+async function doLogin(e) {
+  e.preventDefault();
+  const phone    = document.getElementById('login-phone').value.trim();
+  const password = document.getElementById('login-password').value;
+  const errEl    = document.getElementById('login-error');
+  errEl.classList.remove('show');
+
+  const users = await DB.getUsers();
+  const user  = users.find(u => u.phone === phone || u.phone === phone.replace(/-/g,''));
+
+  if (!user) {
+    errEl.classList.add('show');
+    return;
+  }
+
+  // Check password if set
+  if (user.password && password && user.password !== password) {
+    errEl.classList.add('show');
+    return;
+  }
+
+  if (!user.vip) {
+    errEl.textContent = 'VIP account របស់អ្នកនៅមិនទាន់ approved — ទំនាក់ទំនង @Bunhoeut';
+    errEl.classList.add('show');
+    return;
+  }
+
+  Session.set(user);
+  showToast(`ស្វាគមន៍ ${user.name}! 🎉`, 'success');
+  setTimeout(() => {
+    const returnUrl = getParam('return') || 'index.html';
+    window.location.href = returnUrl;
+  }, 1000);
+}
+</script>
+</body>
+</html>

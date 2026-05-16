@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rise Education — អត្ថបទ</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- READING PROGRESS BAR -->
+<div id="progress-bar"></div>
+
+<div id="nav-placeholder"></div>
+
+<main class="container-sm" id="article-main" style="padding-top:32px;padding-bottom:48px">
+  <div style="text-align:center;padding:80px 0;color:var(--muted);font-family:'Noto Sans Khmer',serif">
+    កំពុងផ្ទុកអត្ថបទ...
+  </div>
+</main>
+
+<!-- MOBILE SHARE BAR -->
+<div class="mobile-share-bar" id="share-bar">
+  <button class="btn btn-fb" id="share-fb" onclick="shareFacebook()">📘 Share</button>
+  <button class="btn btn-tg" id="share-tg" onclick="shareTelegram()">✈ Share</button>
+  <span id="share-pillar" style="font-family:'Noto Sans Khmer',serif;font-size:12px;color:var(--muted);flex-shrink:0"></span>
+</div>
+
+<div id="footer-placeholder"></div>
+
+<script src="app.js"></script>
+<script>
+let currentArticle = null;
+
+function shareFacebook() {
+  const url = encodeURIComponent(window.location.href);
+  window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+}
+
+function shareTelegram() {
+  const url = encodeURIComponent(window.location.href);
+  const title = encodeURIComponent(currentArticle ? currentArticle.title : 'Rise Education');
+  window.open(`https://t.me/RiseEducationX`, '_blank');
+}
+
+// Progress bar
+window.addEventListener('scroll', () => {
+  const bar = document.getElementById('progress-bar');
+  if (!bar) return;
+  const body = document.body;
+  const html = document.documentElement;
+  const total = Math.max(body.scrollHeight, html.scrollHeight) - window.innerHeight;
+  const progress = total > 0 ? (window.scrollY / total) * 100 : 0;
+  bar.style.width = progress + '%';
+});
+
+(async function() {
+  initPage('');
+  const id = parseInt(getParam('id'));
+  const main = document.getElementById('article-main');
+  const isVIP = Session.isVIP();
+
+  if (!id) {
+    main.innerHTML = `<div style="text-align:center;padding:80px 0">
+      <div style="font-size:48px;margin-bottom:16px">📭</div>
+      <div style="font-family:'Noto Sans Khmer',serif;color:var(--muted)">រកមិនឃើញអត្ថបទ</div>
+      <a href="index.html" class="btn btn-ghost" style="margin-top:16px">← ត្រឡប់ទំព័រដើម</a>
+    </div>`;
+    return;
+  }
+
+  const articles = await DB.getArticles();
+  const article = articles.find(a => a.id === id);
+
+  if (!article) {
+    main.innerHTML = `<div style="text-align:center;padding:80px 0">
+      <div style="font-size:48px;margin-bottom:16px">😕</div>
+      <div style="font-family:'Noto Sans Khmer',serif;color:var(--muted)">អត្ថបទនេះមិនមាន</div>
+      <a href="index.html" class="btn btn-ghost" style="margin-top:16px">← ត្រឡប់ទំព័រដើម</a>
+    </div>`;
+    return;
+  }
+
+  currentArticle = article;
+  await DB.incrementViews(id);
+
+  const pillar = getPillar(article.pillar);
+  const hasAccess = article.access === 'free' || isVIP;
+
+  // Update title & progress bar color
+  document.title = `${article.title} — Rise Education`;
+  const bar = document.getElementById('progress-bar');
+  if (bar) bar.style.background = pillar.color;
+
+  // Share bar pillar label
+  const sharePillar = document.getElementById('share-pillar');
+  if (sharePillar) sharePillar.textContent = pillar.kh;
+
+  // Parse content
+  const fullContent = parseMarkdown(article.content);
+
+  // For VIP gate: split content at 40%
+  let contentHtml = '';
+  if (!hasAccess && article.access === 'vip') {
+    const words = article.content.split(' ');
+    const cutoff = Math.floor(words.length * 0.4);
+    const visibleContent = parseMarkdown(words.slice(0, cutoff).join(' ') + '...');
+    const hiddenContent = parseMarkdown(words.slice(cutoff).join(' '));
+
+    contentHtml = `
+    <div class="article-body">
+      ${visibleContent}
+    </div>
+    <div class="vip-gate-wrapper">
+      <div class="vip-gate-blur article-body" style="max-height:200px;overflow:hidden">
+        ${hiddenContent}
+      </div>
+      <div class="vip-gate-overlay">
+        <div class="vip-gate-card">
+          <div class="vip-gate-icon">⭐</div>
+          <div class="vip-gate-title">ខ្លឹមសារពិសេស VIP</div>
+          <p style="font-family:'Noto Sans Khmer',serif;font-size:13px;color:var(--muted);margin-bottom:12px">
+            ចូលរួម VIP ដើម្បីអានអត្ថបទពេញ និងខ្លឹមសារ exclusive ទាំងអស់
+          </p>
+          <div class="vip-gate-price">8,000 <span style="font-size:14px">រៀល</span> <span style="font-size:13px;color:var(--muted)">/ខែ</span></div>
+          <div class="vip-gate-btns">
+            <a href="vip-join.html" class="btn btn-gold btn-full">ចូលរួម VIP ឥឡូវ</a>
+            <a href="vip-login.html" class="btn btn-ghost btn-full">ចូលគណនី</a>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  } else {
+    contentHtml = `<div class="article-body">${fullContent}</div>`;
+  }
+
+  // Next article (same pillar)
+  const sameCategory = articles.filter(a => a.pillar === article.pillar && a.id !== article.id);
+  const nextArticle = sameCategory[0];
+  const nextHtml = nextArticle ? `
+    <a href="article.html?id=${nextArticle.id}" class="next-article">
+      <div>
+        <div class="next-article-label">អត្ថបទបន្ទាប់</div>
+        <div class="next-article-title">${nextArticle.title}</div>
+      </div>
+      <div class="next-article-arrow">→</div>
+    </a>` : '';
+
+  main.innerHTML = `
+    <div class="article-header">
+      <a href="index.html" style="font-size:13px;color:var(--muted);display:inline-flex;align-items:center;gap:6px;margin-bottom:20px">
+        ← ត្រឡប់ទំព័រដើម
+      </a>
+      <div class="article-meta">
+        <span class="badge badge-pillar" style="background:${pillar.color}22;color:${pillar.color};border:1px solid ${pillar.color}33">
+          ${pillar.icon} ${pillar.kh}
+        </span>
+        ${article.access === 'free'
+          ? '<span class="badge badge-free">ឥតគិតថ្លៃ</span>'
+          : '<span class="badge badge-vip">⭐ ពិសេស</span>'}
+      </div>
+      <h1 class="article-title">${article.title}</h1>
+      ${article.subtitle ? `<div class="article-subtitle">${article.subtitle}</div>` : ''}
+      <div class="article-info">
+        <span>⏱ អានប្រហែល ${article.readTime} នាទី</span>
+        <span>📅 ${formatDate(article.date)}</span>
+        <span>👁 ${article.views || 1} views</span>
+      </div>
+    </div>
+
+    ${article.coverImage ? `
+    <div style="border-radius:var(--radius);overflow:hidden;margin-bottom:24px;aspect-ratio:16/9">
+      <img src="${article.coverImage}" alt="${article.title}" style="width:100%;height:100%;object-fit:cover">
+    </div>` : ''}
+
+    ${contentHtml}
+
+    <div class="divider"></div>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px">
+      <button onclick="shareFacebook()" class="btn btn-fb">📘 Share Facebook</button>
+      <button onclick="shareTelegram()" class="btn btn-tg">✈ Share Telegram</button>
+    </div>
+
+    ${nextHtml}
+  `;
+})();
+</script>
+</body>
+</html>

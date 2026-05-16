@@ -1,0 +1,40 @@
+{
+  "site": {
+    "name": "Rise Education",
+    "tagline": "អាន • ចេះ • រីកចម្រើន",
+    "description": "បណ្ណាល័យចំណេះដឹងសម្រាប់និស្សិត និងយុវវ័យខ្មែរ",
+    "url": "https://rise-educationx.netlify.app"
+  },
+  "owner": {
+    "name": "Phin Bunhoeut",
+    "email": "bunhoeut@gmail.com",
+    "phone": "+855 98 975 555",
+    "location": "Battambang, Cambodia"
+  },
+  "social": {
+    "telegram_personal": "https://t.me/Bunhoeut",
+    "telegram_group": "https://t.me/RiseEducationX",
+    "facebook": "https://www.facebook.com/RiseEducationX",
+    "youtube": "https://www.youtube.com/@RiseEducationX"
+  },
+  "payment": {
+    "aba_name": "PHIN BUNHOEUT",
+    "aba_phone": "+855 98 975 555",
+    "aba_khr": "006 971 055",
+    "aba_usd": "002 018 600",
+    "aba_qr": "aba-qr.jpg"
+  },
+  "pricing": {
+    "monthly": { "price": 2, "label": "8,000 រៀល/ខែ", "period": "monthly" },
+    "quarterly": { "price": 5, "label": "20,000 រៀល/៣ខែ", "period": "quarterly", "save": "17%" },
+    "yearly": { "price": 15, "label": "48,000 រៀល/ឆ្នាំ", "period": "yearly", "save": "50%" }
+  },
+  "pillars": [
+    { "id": "growth",  "kh": "ការអភិវឌ្ឍខ្លួន",    "en": "Personal Growth",  "color": "#c8f060", "icon": "🌱", "desc": "Mindset, self-confidence, goal setting, overcoming fear" },
+    { "id": "study",   "kh": "ជំនាញសិក្សា",         "en": "Study Skills",     "color": "#60d4f0", "icon": "📚", "desc": "Learning methods, note-taking, exam preparation" },
+    { "id": "life",    "kh": "ជំនាញជីវិត",           "en": "Life Skills",      "color": "#f0a060", "icon": "💡", "desc": "Time management, communication, emotional intelligence" },
+    { "id": "career",  "kh": "ការរីកចម្រើនអាជីព",    "en": "Career Growth",    "color": "#a060f0", "icon": "🚀", "desc": "CV writing, job hunting, LinkedIn, scholarships" },
+    { "id": "finance", "kh": "ហិរញ្ញវត្ថុផ្ទាល់ខ្លួន", "en": "Personal Finance", "color": "#60f0a8", "icon": "💰", "desc": "Budgeting, saving, ABA Pay, avoiding debt" },
+    { "id": "comm",    "kh": "ទំនាក់ទំនង & ភាសា",    "en": "Communication",    "color": "#f06088", "icon": "🗣️", "desc": "English skills, public speaking, business communication" }
+  ]
+}
