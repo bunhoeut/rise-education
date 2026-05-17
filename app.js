@@ -367,49 +367,41 @@ function toggleMobileNav() {
 // ─── FOOTER BUILDER ───────────────────
 function buildFooter() {
   return `
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div>
-          <div class="footer-brand-name">RISE EDUCATION</div>
-          <div class="footer-tagline">
-            <span style="color:var(--read-color)">អាន</span>
-            <span style="color:var(--muted2)"> • </span>
-            <span style="color:var(--know-color)">ចេះ</span>
-            <span style="color:var(--muted2)"> • </span>
-            <span style="color:var(--grow-color)">រីកចម្រើន</span>
-          </div>
-          <div class="footer-social">
-            <a href="${CONFIG.social.facebook}" target="_blank" class="footer-social-fb" title="Facebook">f</a>
-            <a href="${CONFIG.social.telegram_group}" target="_blank" class="footer-social-tg" title="Telegram">✈</a>
-            <a href="${CONFIG.social.youtube}" target="_blank" class="footer-social-yt" title="YouTube">▶</a>
-          </div>
-        </div>
-        <div>
-          <div class="footer-col-title">ប្រធានបទ</div>
-          <div class="footer-links">
-            ${CONFIG.pillars.map(p =>
-              `<a href="pillar.html?pillar=${p.id}">${p.kh}</a>`
-            ).join('')}
-          </div>
-        </div>
-        <div>
-          <div class="footer-col-title">ទំនាក់ទំនង</div>
-          <div class="footer-links">
-            <a href="about.html">អំពីយើង</a>
-            <a href="${CONFIG.social.telegram_group}" target="_blank">Telegram Group</a>
-            <a href="${CONFIG.social.facebook}" target="_blank">Facebook Page</a>
-            <a href="${CONFIG.social.youtube}" target="_blank">YouTube Channel</a>
-            <a href="mailto:${CONFIG.owner.email}">${CONFIG.owner.email}</a>
-            <a href="vip-join.html">ចូលរួម VIP</a>
-          </div>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <div class="footer-copy">© 2026 Rise Education · បង្កើតដោយ ភិន ប៊ុនហឿត</div>
-        <div class="footer-copy">${CONFIG.owner.email} · ${CONFIG.owner.phone}</div>
-      </div>
+  <footer style="background:#0f172a;padding:32px 20px;text-align:center;border-top:1px solid rgba(255,255,255,0.06)">
+
+    <!-- Social icons — centered -->
+    <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:20px">
+
+      <!-- Facebook -->
+      <a href="${CONFIG.social.facebook}" target="_blank"
+        style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;text-decoration:none;transition:background 0.2s"
+        title="Facebook">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff" opacity="0.7"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+      </a>
+
+      <!-- Telegram -->
+      <a href="${CONFIG.social.telegram_group}" target="_blank"
+        style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;text-decoration:none"
+        title="Telegram">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(255,255,255,0.7)"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.941z"/></svg>
+      </a>
+
+      <!-- YouTube -->
+      <a href="${CONFIG.social.youtube}" target="_blank"
+        style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;text-decoration:none"
+        title="YouTube">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(255,255,255,0.7)"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#0f172a"/></svg>
+      </a>
+
     </div>
+
+    <!-- RISE + copyright — single line centered -->
+    <div style="display:inline-flex;align-items:center;justify-content:center;gap:10px">
+      <span style="font-family:'Inter',sans-serif;font-size:15px;font-weight:800;color:#d97706;letter-spacing:0.06em">RISE</span>
+      <span style="width:1px;height:14px;background:rgba(255,255,255,0.15);display:inline-block"></span>
+      <span style="font-family:'Inter',sans-serif;font-size:13px;color:rgba(255,255,255,0.35)">© 2026 Rise Education</span>
+    </div>
+
   </footer>
   <div id="toast" class="toast"></div>`;
 }
