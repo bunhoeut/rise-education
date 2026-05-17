@@ -41,22 +41,41 @@ const KEYS = {
 
 // ─── DATA LAYER ───────────────────────
 const DB = {
-  // Load articles from localStorage or fetch from JSON
+
+  // ─── PUBLIC: Always fetch fresh from articles.json ───────────────
+  // Uses ?v=timestamp cache-buster so phones/CDN never serve stale data.
+  // Admin panel uses saveArticles() → localStorage separately.
   async getArticles() {
-    const cached = localStorage.getItem(KEYS.articles);
-    if (cached) {
-      try { return JSON.parse(cached); } catch(e) {}
+    // If admin is logged in, merge: GitHub base + admin's localStorage edits
+    // so newly published articles appear immediately on this browser too.
+    if (AdminSession.isLoggedIn()) {
+      const adminData = localStorage.getItem(KEYS.articles);
+      if (adminData) {
+        try { return JSON.parse(adminData); } catch(e) {}
+      }
     }
+
+    // For ALL visitors (phone, desktop, any browser):
+    // Always fetch from articles.json with a cache-buster timestamp.
+    // This guarantees phones always get the latest articles from GitHub.
     try {
-      const res = await fetch('articles.json');
+      const bust = `?v=${Date.now()}`;
+      const res = await fetch(`articles.json${bust}`);
+      if (!res.ok) throw new Error('fetch failed');
       const data = await res.json();
-      localStorage.setItem(KEYS.articles, JSON.stringify(data));
       return data;
     } catch(e) {
+      // Last resort: try localStorage if network fails
+      const fallback = localStorage.getItem(KEYS.articles);
+      if (fallback) {
+        try { return JSON.parse(fallback); } catch(e2) {}
+      }
       return [];
     }
   },
 
+  // Admin-only: save published/edited articles to localStorage
+  // After saving, admin copies to GitHub (articles.json) to make live for everyone
   saveArticles(articles) {
     localStorage.setItem(KEYS.articles, JSON.stringify(articles));
   },
@@ -109,7 +128,15 @@ const DB = {
   },
 
   async incrementViews(id) {
-    const articles = await this.getArticles();
+    // Views are tracked in localStorage only (not critical to sync)
+    const cached = localStorage.getItem(KEYS.articles);
+    let articles = [];
+    if (cached) {
+      try { articles = JSON.parse(cached); } catch(e) {}
+    }
+    if (articles.length === 0) {
+      articles = await this.getArticles();
+    }
     const article = articles.find(a => a.id === id);
     if (article) {
       article.views = (article.views || 0) + 1;
