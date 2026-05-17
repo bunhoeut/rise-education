@@ -15,6 +15,10 @@ body { background: var(--bg); }
 .stat-card { background:var(--surface2); border-radius:var(--radius); padding:20px 24px; }
 .stat-val { font-size:32px; font-weight:700; }
 .stat-lbl { font-size:13px; color:var(--muted); margin-top:4px; font-family:'Noto Sans Khmer',serif; }
+.sync-status { display:inline-flex; align-items:center; gap:6px; font-size:12px; padding:4px 10px; border-radius:100px; font-family:'Inter',sans-serif; }
+.sync-ok  { background:rgba(96,240,168,0.15); color:#60f0a8; }
+.sync-err { background:rgba(240,96,96,0.15);  color:#f06060; }
+.sync-ing { background:rgba(96,212,240,0.15); color:#60d4f0; }
 </style>
 </head>
 <body>
@@ -41,17 +45,16 @@ body { background: var(--bg); }
 
 <!-- ADMIN DASHBOARD -->
 <div class="hidden" id="admin-dashboard">
+
   <div class="admin-header">
     <div style="display:flex;align-items:center;gap:12px">
       <img src="logo.png" alt="Rise Education" style="height:32px" onerror="this.style.display='none'">
       <span style="font-weight:700;letter-spacing:0.04em">RISE EDUCATION</span>
       <span style="font-size:12px;color:var(--orange);background:rgba(240,112,32,0.1);padding:3px 10px;border-radius:100px">ADMIN</span>
     </div>
-    <div style="display:flex;gap:10px;align-items:center">
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <span id="sync-indicator" class="sync-status sync-ok">✅ GitHub ត្រៀម</span>
       <a href="index.html" target="_blank" class="btn btn-ghost btn-sm">👁 View Site</a>
-      <button class="btn btn-sm" onclick="exportArticles()" style="background:#059669;color:#fff;font-family:'Noto Sans Khmer',sans-serif">
-        ⬇️ Export articles.json
-      </button>
       <button class="btn btn-ghost btn-sm" onclick="adminLogout()">ចាកចេញ</button>
     </div>
   </div>
@@ -59,18 +62,10 @@ body { background: var(--bg); }
   <div class="admin-layout">
     <!-- SIDEBAR -->
     <div class="admin-sidebar">
-      <button class="admin-sidebar-link active" onclick="showTab('publish', this)">
-        ✍️ បោះពុម្ពអត្ថបទ
-      </button>
-      <button class="admin-sidebar-link" onclick="showTab('manage', this)">
-        📋 គ្រប់គ្រងអត្ថបទ
-      </button>
-      <button class="admin-sidebar-link" onclick="showTab('members', this)">
-        👥 សមាជិក VIP
-      </button>
-      <button class="admin-sidebar-link" onclick="showTab('stats', this)">
-        📊 Stats
-      </button>
+      <button class="admin-sidebar-link active" onclick="showTab('publish', this)">✍️ បោះពុម្ពអត្ថបទ</button>
+      <button class="admin-sidebar-link" onclick="showTab('manage', this)">📋 គ្រប់គ្រងអត្ថបទ</button>
+      <button class="admin-sidebar-link" onclick="showTab('members', this)">👥 សមាជិក VIP</button>
+      <button class="admin-sidebar-link" onclick="showTab('stats', this)">📊 Stats</button>
     </div>
 
     <!-- CONTENT -->
@@ -80,7 +75,7 @@ body { background: var(--bg); }
       <div id="tab-publish">
         <h2 style="margin-bottom:6px">បោះពុម្ពអត្ថបទ</h2>
         <p style="font-family:'Noto Sans Khmer',serif;color:var(--muted);font-size:14px;margin-bottom:24px">
-          Fill in all fields → Click Publish → Article appears on website immediately
+          Fill in all fields → Click Publish → Auto-saves to GitHub → Live in 60s 🚀
         </p>
 
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
@@ -120,7 +115,7 @@ body { background: var(--bg); }
 
         <div class="form-group">
           <label class="form-label">Cover Image URL <span style="color:var(--muted2)">(ស្រេចចិត្ត)</span></label>
-          <input type="text" class="form-input" id="art-cover" placeholder="https://example.com/image.jpg (leave empty for auto gradient)">
+          <input type="text" class="form-input" id="art-cover" placeholder="https://example.com/image.jpg">
         </div>
 
         <div class="form-group">
@@ -135,11 +130,12 @@ body { background: var(--bg); }
           <div class="form-hint">Supports Markdown: ## Heading · **bold** · *italic* · - bullet</div>
         </div>
 
-        <div style="display:flex;gap:12px;flex-wrap:wrap">
-          <button class="btn btn-primary btn-lg" onclick="publishArticle()">
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+          <button class="btn btn-primary btn-lg" onclick="publishArticle()" id="publish-btn">
             🚀 Publish Article
           </button>
           <button class="btn btn-ghost" onclick="clearForm()">Clear Form</button>
+          <span id="publish-status" style="font-size:13px;color:var(--muted);font-family:'Noto Sans Khmer',serif"></span>
         </div>
 
         <!-- EDIT MODE indicator -->
@@ -159,15 +155,7 @@ body { background: var(--bg); }
         <div style="overflow-x:auto">
           <table class="data-table" id="manage-table">
             <thead>
-              <tr>
-                <th>#</th>
-                <th>ចំណងជើង</th>
-                <th>ប្រភេទ</th>
-                <th>Access</th>
-                <th>ថ្ងៃខែ</th>
-                <th>👁 Views</th>
-                <th>Actions</th>
-              </tr>
+              <tr><th>#</th><th>ចំណងជើង</th><th>ប្រភេទ</th><th>Access</th><th>ថ្ងៃខែ</th><th>👁 Views</th><th>Actions</th></tr>
             </thead>
             <tbody id="manage-tbody"></tbody>
           </table>
@@ -181,38 +169,18 @@ body { background: var(--bg); }
           <input type="text" class="form-input" id="search-members" placeholder="🔍 ស្វែងរកតាមលេខទូរស័ព្ទ..."
             oninput="renderMembersTable()" style="max-width:260px">
         </div>
-
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:28px" id="member-stats"></div>
-
         <h3 style="margin-bottom:12px;color:var(--gold)">⏳ រង់ចាំ Approval</h3>
         <div style="overflow-x:auto;margin-bottom:32px">
           <table class="data-table">
-            <thead>
-              <tr>
-                <th>ឈ្មោះ</th>
-                <th>លេខទូរស័ព្ទ</th>
-                <th>គម្រោង</th>
-                <th>Plan</th>
-                <th>ថ្ងៃចុះឈ្មោះ</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
+            <thead><tr><th>ឈ្មោះ</th><th>លេខទូរស័ព្ទ</th><th>គម្រោង</th><th>Plan</th><th>ថ្ងៃចុះឈ្មោះ</th><th>Actions</th></tr></thead>
             <tbody id="pending-tbody"></tbody>
           </table>
         </div>
-
         <h3 style="margin-bottom:12px;color:var(--green)">✅ VIP Members សកម្ម</h3>
         <div style="overflow-x:auto">
           <table class="data-table">
-            <thead>
-              <tr>
-                <th>ឈ្មោះ</th>
-                <th>លេខទូរស័ព្ទ</th>
-                <th>Plan</th>
-                <th>ផុតកំណត់</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
+            <thead><tr><th>ឈ្មោះ</th><th>លេខទូរស័ព្ទ</th><th>Plan</th><th>ផុតកំណត់</th><th>Actions</th></tr></thead>
             <tbody id="active-tbody"></tbody>
           </table>
         </div>
@@ -231,58 +199,46 @@ body { background: var(--bg); }
 </div>
 
 <div id="toast" class="toast"></div>
-
 <script src="app.js"></script>
 <script>
-// ─── GITHUB CONFIG ───────────────────
-const GITHUB = {
-  token: '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',
-  owner: 'bunhoeut',
-  repo:  'rise-education',
-  file:  'articles.json'
-};
 
+// ─── AUTO-SAVE TO GITHUB via Netlify Function ─────────────────────────────
+// Token is stored securely in Netlify Environment Variables (GITHUB_TOKEN)
+// This function calls /.netlify/functions/save-articles which uses the token server-side
 async function saveToGitHub(articles) {
+  setSyncStatus('ing', '⏳ កំពុង Save ទៅ GitHub...');
   try {
-    // Get current file SHA (needed for update)
-    const getRes = await fetch(`https://api.github.com/repos/${GITHUB.owner}/${GITHUB.repo}/contents/${GITHUB.file}`, {
-      headers: {
-        'Authorization': `token ${GITHUB.token}`,
-        'Accept': 'application/vnd.github.v3+json'
-      }
-    });
-    const fileData = await getRes.json();
-    const sha = fileData.sha;
-
-    // Update file with new content
-    const content = btoa(unescape(encodeURIComponent(JSON.stringify(articles, null, 2))));
-    const putRes = await fetch(`https://api.github.com/repos/${GITHUB.owner}/${GITHUB.repo}/contents/${GITHUB.file}`, {
-      method: 'PUT',
-      headers: {
-        'Authorization': `token ${GITHUB.token}`,
-        'Accept': 'application/vnd.github.v3+json',
-        'Content-Type': 'application/json'
-      },
+    const res = await fetch('/.netlify/functions/save-articles', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        message: `Update articles - ${new Date().toISOString().split('T')[0]}`,
-        content: content,
-        sha: sha
+        articles: articles,
+        adminPassword: CONFIG.admin_password  // verified server-side too
       })
     });
-
-    if (putRes.ok) {
-      showToast('✅ រក្សាទុកទៅ GitHub ដោយជោគជ័យ! Website updates in 60s', 'success');
+    const data = await res.json();
+    if (res.ok && data.success) {
+      setSyncStatus('ok', `✅ GitHub រក្សាទុករួច! Live in ~60s`);
+      showToast('✅ Auto-saved to GitHub! Website updates in 60s 🎉', 'success');
       return true;
     } else {
-      throw new Error('GitHub save failed');
+      throw new Error(data.error || 'Save failed');
     }
   } catch(e) {
-    showToast('⚠️ GitHub save failed — please Export manually', 'error');
-    console.error('GitHub error:', e);
+    setSyncStatus('err', '❌ GitHub save failed');
+    showToast('⚠️ GitHub save failed: ' + e.message, 'error');
+    console.error('GitHub save error:', e);
     return false;
   }
 }
 
+function setSyncStatus(type, msg) {
+  const el = document.getElementById('sync-indicator');
+  el.className = `sync-status sync-${type}`;
+  el.textContent = msg;
+}
+
+// ─── ADMIN LOGIN ──────────────────────
 let editingId = null;
 
 function doAdminLogin(e) {
@@ -321,6 +277,7 @@ function updateReadTime(content) {
   document.getElementById('readtime-live').textContent = `⏱ ${rt} នាទី`;
 }
 
+// ─── PUBLISH ARTICLE ──────────────────
 async function publishArticle() {
   const title   = document.getElementById('art-title').value.trim();
   const subtitle= document.getElementById('art-subtitle').value.trim();
@@ -334,26 +291,38 @@ async function publishArticle() {
     return;
   }
 
+  // Disable button while saving
+  const btn = document.getElementById('publish-btn');
+  btn.disabled = true;
+  btn.textContent = '⏳ កំពុង Publish...';
+
   const article = {
     title, subtitle, pillar, access,
     coverImage: cover,
     content,
-    excerpt: content.replace(/#+\s|[*_`]/g,'').substring(0,150) + '...',
+    excerpt: content.replace(/#+\s|[*_`]/g,'').substring(0, 150) + '...',
     readTime: calcReadTime(content)
   };
 
-  if (editingId) {
-    await DB.updateArticle(editingId, article);
-    showToast('កំពុងរក្សាទុក...', 'success');
-    cancelEdit();
-  } else {
-    await DB.addArticle(article);
-    showToast('កំពុងរក្សាទុក...', 'success');
+  try {
+    if (editingId) {
+      await DB.updateArticle(editingId, article);
+      cancelEdit();
+    } else {
+      await DB.addArticle(article);
+    }
+
+    // Get full updated list and push to GitHub automatically
+    const allArticles = await DB.getArticles();
+    const saved = await saveToGitHub(allArticles);
+
+    if (saved) {
+      clearForm();
+    }
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '🚀 Publish Article';
   }
-  // Auto-save to GitHub
-  const allArticles = await DB.getArticles();
-  await saveToGitHub(allArticles);
-  clearForm();
 }
 
 function clearForm() {
@@ -370,7 +339,6 @@ function clearForm() {
 function cancelEdit() {
   editingId = null;
   document.getElementById('edit-indicator').classList.add('hidden');
-  document.querySelector('.admin-sidebar-link').click();
 }
 
 async function editArticle(id) {
@@ -406,6 +374,8 @@ async function toggleAccess(id) {
   if (!art) return;
   const newAccess = art.access === 'free' ? 'vip' : 'free';
   await DB.updateArticle(id, { access: newAccess });
+  const allArticles = await DB.getArticles();
+  await saveToGitHub(allArticles);
   showToast(`Changed to ${newAccess}`, 'success');
   renderManageTable();
 }
@@ -423,9 +393,7 @@ async function renderManageTable() {
     const p = getPillar(a.pillar);
     return `<tr>
       <td style="color:var(--muted);font-size:12px">#${a.id}</td>
-      <td>
-        <div style="font-family:'Noto Sans Khmer',serif;font-size:13px;max-width:260px;word-break:break-word">${a.title}</div>
-      </td>
+      <td><div style="font-family:'Noto Sans Khmer',serif;font-size:13px;max-width:260px;word-break:break-word">${a.title}</div></td>
       <td><span style="font-size:11px;padding:2px 8px;border-radius:100px;background:${p.color}22;color:${p.color}">${p.kh}</span></td>
       <td>
         <button onclick="toggleAccess(${a.id})" style="font-size:11px;border:none;padding:3px 8px;border-radius:100px;cursor:pointer;
@@ -449,27 +417,18 @@ async function renderMembersTable() {
   const users = await DB.getUsers();
   const q = document.getElementById('search-members').value.toLowerCase();
   const filtered = q ? users.filter(u => u.phone.includes(q) || u.name.toLowerCase().includes(q)) : users;
-
   const pending = filtered.filter(u => !u.vip && !u.rejected);
   const active  = filtered.filter(u => u.vip);
 
-  // Stats
-  const statsEl = document.getElementById('member-stats');
-  statsEl.innerHTML = [
+  document.getElementById('member-stats').innerHTML = [
     { val: users.length, lbl: 'ចុះឈ្មោះសរុប', color: 'var(--cyan)' },
     { val: active.length, lbl: 'VIP សកម្ម', color: 'var(--green)' },
     { val: pending.length, lbl: 'រង់ចាំ Approval', color: 'var(--gold)' },
     { val: users.filter(u=>u.rejected).length, lbl: 'Rejected', color: 'var(--red)' }
-  ].map(s => `
-    <div class="stat-card">
-      <div class="stat-val" style="color:${s.color}">${s.val}</div>
-      <div class="stat-lbl">${s.lbl}</div>
-    </div>`).join('');
+  ].map(s => `<div class="stat-card"><div class="stat-val" style="color:${s.color}">${s.val}</div><div class="stat-lbl">${s.lbl}</div></div>`).join('');
 
-  // Pending
-  const pendingBody = document.getElementById('pending-tbody');
-  pendingBody.innerHTML = pending.length === 0
-    ? `<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:24px;font-family:'Noto Sans Khmer',serif">មិនមានការស្នើ VIP ថ្មី</td></tr>`
+  document.getElementById('pending-tbody').innerHTML = pending.length === 0
+    ? `<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:24px;font-family:'Noto Sans Khmer',serif">មិនមានការស្នើ VIP ថ្មី</td></tr>`
     : pending.map(u => `<tr>
         <td style="font-family:'Noto Sans Khmer',serif">${u.name}</td>
         <td>${u.phone}</td>
@@ -478,29 +437,21 @@ async function renderMembersTable() {
         <td>
           <div style="display:flex;gap:6px;flex-wrap:wrap">
             <button class="btn btn-sm" onclick="activateUser(${u.id},'${u.plan}')"
-              style="background:rgba(96,240,168,0.15);color:var(--green);border:1px solid rgba(96,240,168,0.3)">
-              ✅ Activate VIP
-            </button>
+              style="background:rgba(96,240,168,0.15);color:var(--green);border:1px solid rgba(96,240,168,0.3)">✅ Activate VIP</button>
             <button class="btn btn-sm" onclick="rejectUser(${u.id})"
-              style="background:rgba(240,96,96,0.1);color:var(--red);border:1px solid rgba(240,96,96,0.2)">
-              ❌ Reject
-            </button>
+              style="background:rgba(240,96,96,0.1);color:var(--red);border:1px solid rgba(240,96,96,0.2)">❌ Reject</button>
           </div>
         </td>
       </tr>`).join('');
 
-  // Active
-  const activeBody = document.getElementById('active-tbody');
-  activeBody.innerHTML = active.length === 0
+  document.getElementById('active-tbody').innerHTML = active.length === 0
     ? `<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:24px;font-family:'Noto Sans Khmer',serif">មិនទាន់មី VIP members</td></tr>`
     : active.map(u => `<tr>
         <td style="font-family:'Noto Sans Khmer',serif">${u.name}</td>
         <td>${u.phone}</td>
         <td><span style="font-size:12px;color:var(--gold)">${u.plan}</span></td>
         <td style="font-size:12px;color:${new Date(u.expiry)<new Date()?'var(--red)':'var(--green)'}">${u.expiry||'—'}</td>
-        <td>
-          <button class="btn btn-ghost btn-sm" onclick="activateUser(${u.id},'${u.plan}')">🔄 Renew</button>
-        </td>
+        <td><button class="btn btn-ghost btn-sm" onclick="activateUser(${u.id},'${u.plan}')">🔄 Renew</button></td>
       </tr>`).join('');
 }
 
@@ -518,21 +469,16 @@ async function rejectUser(id) {
 
 async function renderStats() {
   const articles = await DB.getArticles();
-  const users    = await DB.getUsers();
+  const users = await DB.getUsers();
   const totalViews = articles.reduce((s,a) => s+(a.views||0), 0);
-
   document.getElementById('stats-grid').innerHTML = [
     { val: articles.length, lbl: 'អត្ថបទសរុប', color: 'var(--cyan)' },
     { val: articles.filter(a=>a.access==='free').length, lbl: 'ឥតគិតថ្លៃ', color: 'var(--green)' },
-    { val: articles.filter(a=>a.access==='vip').length,  lbl: '⭐ VIP', color: 'var(--gold)' },
+    { val: articles.filter(a=>a.access==='vip').length, lbl: '⭐ VIP', color: 'var(--gold)' },
     { val: users.length, lbl: 'Users ចុះឈ្មោះ', color: 'var(--cyan)' },
     { val: users.filter(u=>u.vip).length, lbl: 'VIP Members', color: 'var(--green)' },
     { val: totalViews, lbl: 'Views សរុប', color: 'var(--orange)' }
-  ].map(s => `
-    <div class="stat-card">
-      <div class="stat-val" style="color:${s.color}">${s.val}</div>
-      <div class="stat-lbl">${s.lbl}</div>
-    </div>`).join('');
+  ].map(s => `<div class="stat-card"><div class="stat-val" style="color:${s.color}">${s.val}</div><div class="stat-lbl">${s.lbl}</div></div>`).join('');
 
   const top5 = [...articles].sort((a,b)=>(b.views||0)-(a.views||0)).slice(0,5);
   document.getElementById('top-articles').innerHTML = top5.map((a,i) => `
@@ -543,37 +489,19 @@ async function renderStats() {
     </div>`).join('');
 }
 
-async function exportArticles() {
-  const articles = await DB.getArticles();
-  const json = JSON.stringify(articles, null, 2);
-  const blob = new Blob([json], {type: 'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'articles.json';
-  a.click();
-  URL.revokeObjectURL(url);
-  showToast('articles.json downloaded! Upload to GitHub ✅', 'success');
-}
-
 async function loadAllData() {
-  // Always fetch fresh from GitHub first
+  // Load fresh articles from GitHub into localStorage for admin use
   try {
-    const res = await fetch(`https://api.github.com/repos/${GITHUB.owner}/${GITHUB.repo}/contents/${GITHUB.file}`, {
-      headers: {
-        'Authorization': `token ${GITHUB.token}`,
-        'Accept': 'application/vnd.github.v3+json'
-      }
-    });
-    const fileData = await res.json();
-    const content = decodeURIComponent(escape(atob(fileData.content.replace(/\n/g,''))));
-    const articles = JSON.parse(content);
-    localStorage.setItem('rise_articles', JSON.stringify(articles));
-    showToast('✅ ផ្ទុកអត្ថបទពី GitHub ដោយជោគជ័យ', 'success');
+    const res = await fetch(`articles.json?v=${Date.now()}`);
+    if (res.ok) {
+      const articles = await res.json();
+      localStorage.setItem('rise_articles', JSON.stringify(articles));
+      setSyncStatus('ok', `✅ GitHub ត្រៀម (${articles.length} articles)`);
+    }
   } catch(e) {
-    console.log('Loading from localStorage instead:', e);
+    setSyncStatus('err', '⚠️ Cannot reach GitHub');
+    console.log('Using localStorage fallback');
   }
-  await DB.getArticles();
   await DB.getUsers();
 }
 
@@ -583,6 +511,7 @@ if (AdminSession.isLoggedIn()) {
   document.getElementById('admin-dashboard').classList.remove('hidden');
   loadAllData();
 }
+
 </script>
 </body>
 </html>
