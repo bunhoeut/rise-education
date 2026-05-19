@@ -5,11 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>អំពីយើង — Rise Education</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&family=Moul&display=swap" rel="stylesheet">
-<style>
-  /* English text always uses Inter first, Noto Sans Khmer only for Khmer script */
-  body { font-family: 'Inter', 'Noto Sans Khmer', sans-serif; }
-</style>
 <link rel="stylesheet" href="style.css">
+<style>
+  /* Inter for English, Noto Sans Khmer for Khmer — loaded AFTER style.css to override */
+  body { font-family: 'Inter', 'Noto Sans Khmer', sans-serif !important; }
+  .section-eyebrow {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    color: #d97706;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+</style>
 <style>
 :root {
   --navy: #0f172a;
@@ -23,12 +31,7 @@
   --text-3: #94a3b8;
 }
 .kh { font-family: 'Noto Sans Khmer', sans-serif; }
-.section-eyebrow {
-  font-size: 13px; letter-spacing: 0.05em;
-  font-family: 'Inter', 'Noto Sans Khmer', sans-serif;
-  color: var(--gold);
-  margin-bottom: 12px; font-weight: 600;
-}
+.section-eyebrow-old-removed {
 .stat-card {
   background: #fff; border: 1px solid var(--border);
   border-radius: 16px; padding: 20px 16px;
@@ -398,13 +401,13 @@
         </div>
 
         <!-- CTA button -->
-        <a href="vip-join.html" style="display:block;width:100%;background:#d97706;color:#fff;border-radius:14px;padding:16px 20px;font-family:'Noto Sans Khmer',sans-serif;font-size:15px;font-weight:700;line-height:1.7;text-align:center;text-decoration:none;margin-bottom:16px;box-sizing:border-box">
+        <a href="vip-join.html" style="display:block;width:100%;background:#d97706;color:#fff;border-radius:14px;padding:16px 20px;font-family:'Noto Sans Khmer',sans-serif;font-size:15px;font-weight:700;line-height:1.7;text-align:center;text-decoration:none;margin-bottom:16px;box-sizing:border-box;cursor:pointer">
           👉 ចុះឈ្មោះជាសមាជិក VIP ឥឡូវនេះ
         </a>
 
-        <!-- Secondary link -->
+        <!-- Secondary link — white visible -->
         <div style="text-align:center;margin-bottom:28px">
-          <a href="index.html#articles" style="font-family:'Noto Sans Khmer',sans-serif;font-size:12px;color:#fff(255,255,255,0.4);text-decoration:none;line-height:1.8">
+          <a href="index.html#articles" style="font-family:'Noto Sans Khmer',sans-serif;font-size:13px;color:rgba(255,255,255,0.75);text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.4);padding-bottom:2px;line-height:1.8">
             ឬអានអត្ថបទឥតគិតថ្លៃជាមុនសិន ➔
           </a>
         </div>
@@ -434,7 +437,13 @@
           </a>
         </div>
 
- 
+        <!-- Footer copyright -->
+        <div style="text-align:center;display:flex;align-items:center;justify-content:center;gap:8px">
+          <span style="font-family:'Inter',sans-serif;font-size:13px;font-weight:700;color:#d97706;letter-spacing:0.06em">RISE</span>
+          <span style="width:1px;height:12px;background:rgba(255,255,255,0.15);display:inline-block"></span>
+          <span style="font-family:'Inter',sans-serif;font-size:12px;color:rgba(255,255,255,0.25)">© 2026 Rise Education</span>
+        </div>
+
       </div>
     </div>
   </div>
