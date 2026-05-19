@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>អំពីយើង — Rise Education</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&family=Moul&display=swap" rel="stylesheet">
+<style>
+  /* English text always uses Inter first, Noto Sans Khmer only for Khmer script */
+  body { font-family: 'Inter', 'Noto Sans Khmer', sans-serif; }
+</style>
 <link rel="stylesheet" href="style.css">
 <style>
 :root {
@@ -20,10 +24,10 @@
 }
 .kh { font-family: 'Noto Sans Khmer', sans-serif; }
 .section-eyebrow {
-  font-size: 14px; letter-spacing: 0.06em;
-  font-family: 'Moul', 'Noto Sans Khmer', sans-serif;
+  font-size: 13px; letter-spacing: 0.05em;
+  font-family: 'Inter', 'Noto Sans Khmer', sans-serif;
   color: var(--gold);
-  margin-bottom: 12px; font-weight: 400;
+  margin-bottom: 12px; font-weight: 600;
 }
 .stat-card {
   background: #fff; border: 1px solid var(--border);
@@ -158,8 +162,10 @@
 
     <!-- Section header -->
     <div style="text-align:center;margin-bottom:40px">
-      <div class="section-eyebrow">✦ បេសកកម្ម និងចក្ខុវិស័យ</div>
-      <h2 style="font-family:'Noto Sans Khmer',sans-serif;font-size:clamp(22px,4vw,32px);font-weight:700;color:#0f172a;margin:0;line-height:1.4">
+      <div style="font-size:12px;letter-spacing:0.05em;margin-bottom:10px;font-weight:600">
+        <span style="font-family:'Noto Sans Khmer',sans-serif;color:#d97706">✦ បេសកកម្ម និងចក្ខុវិស័យ</span>
+      </div>
+      <h2 style="font-family:'Inter','Noto Sans Khmer',sans-serif;font-size:clamp(22px,4vw,32px);font-weight:700;color:#0f172a;margin:0;line-height:1.4">
         ហេតុអ្វី Rise Education?
       </h2>
     </div>
@@ -247,7 +253,7 @@
           <div style="font-family:'Noto Sans Khmer',sans-serif;font-size:15px;font-weight:700;color:#0f172a;line-height:1.5;margin-bottom:8px">ផ្តោតលើជំនាញអនាគត</div>
           <div style="font-family:'Inter',sans-serif;font-size:11px;color:#94a3b8;font-weight:500;margin-bottom:10px;letter-spacing:0.04em">Essential Skills</div>
           <p style="font-family:'Noto Sans Khmer',sans-serif;font-size:14px;color:#64748b;line-height:1.85;margin:0">
-            បណ្តុះបណ្តាលជំនាញទន់ (Soft Skills) ផ្នត់គំនិតរីកចម្រើន (Growth Mindset) និងចំណេះដឹងហិរញ្ញវត្ថុ (Personal Finance) ដែលជាគ្រឹះដ៏សំខាន់ក្រៅប្រព័ន្ធសាលារៀន។
+            បណ្តុះបណ្តាលជំនាញទន់ (Soft Skills) ផ្នត់គំនិតរីកចម្រើន (Growth Mindset) និងចំណេះដឹងហិរញ្ញវត្ថុ ដែលជាគ្រឹះដ៏សំខាន់ក្រៅប្រព័ន្ធសាលារៀន។
           </p>
         </div>
       </div>
@@ -336,7 +342,7 @@
         <!-- Quote -->
         <div style="background:#f8fafc;border-left:3px solid #d97706;border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:24px">
           <p style="font-family:'Noto Sans Khmer',sans-serif;font-size:14px;color:#0f172a;line-height:2;margin:0">
-            "ខ្ញុំបង្កើត Rise Education ឡើង ក្រោមជំនឿចិត្តថា ភាពជោគជ័យក្នុងជីវិត គឺអាស្រ័យទៅលើ <strong style="color:#d97706">ជំនាញ ចំណេះដឹង និងការអភិវឌ្ឍខ្លួន</strong> ជាប្រចាំ ដោយឥតឈប់ឈរ។"
+            "ខ្ញុំបង្កើត Rise Education ឡើង ក្រោមជំនឿចិត្តថា ភាពជោគជ័យក្នុងជីវិត គឺអាស្រ័យទៅលើ<strong style="color:#d97706">ជំនាញ ចំណេះដឹង និងការអភិវឌ្ឍខ្លួន</strong>ជាប្រចាំ ដោយឥតឈប់ឈរ។"
           </p>
           <div style="font-size:12px;color:#94a3b8;margin-top:10px;font-family:'Noto Sans Khmer',sans-serif">
             — ភិន ប៊ុនហឿត, MBA · ស្ថាបនិក Rise Education
@@ -355,42 +361,60 @@
   </div>
 </section>
 
-<!-- CTA -->
+<!-- CTA — Premium dark card -->
 <section style="padding:0 0 56px;background:#f8fafc">
   <div class="container-sm">
-    <div style="background:linear-gradient(160deg,#0f172a 0%,#1e2d4a 100%);border-radius:24px;overflow:hidden;position:relative">
-      <div style="height:3px;background:linear-gradient(90deg,#d97706,#fbbf24,#d97706)"></div>
-      <div style="padding:40px 28px;text-align:center;position:relative;z-index:1">
-        <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:20px">
-          <span style="font-size:36px">🚀</span>
-          <span style="font-size:28px">⭐</span>
+    <div style="background:#0f172a;border-radius:24px;overflow:hidden">
+
+      <!-- Gold top bar -->
+      <div style="height:3px;background:linear-gradient(90deg,#d97706,#f59e0b,#fbbf24)"></div>
+
+      <div style="padding:32px 24px">
+
+        <!-- Icons -->
+        <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:20px;font-size:32px">
+          <span>🚀</span><span>⭐</span>
         </div>
-        <h2 style="font-family:'Noto Sans Khmer',sans-serif;font-size:clamp(18px,4vw,26px);font-weight:700;color:#fff;line-height:1.45;margin-bottom:16px">
+
+        <!-- Title -->
+        <h2 style="font-family:'Noto Sans Khmer',sans-serif;font-size:clamp(17px,4vw,22px);font-weight:700;color:#fff;line-height:1.55;text-align:center;margin-bottom:16px">
           ត្រៀមខ្លួនរួចរាល់ហើយឬនៅ<br>
           <span style="color:#fbbf24">ក្នុងការផ្លាស់ប្តូរជីវិត និងអាជីពរបស់អ្នក?</span>
         </h2>
-        <p style="font-family:'Noto Sans Khmer',sans-serif;font-size:14px;color:rgba(255,255,255,0.72);line-height:1.9;max-width:460px;margin:0 auto 28px">
-          ចូលរួមជាមួយ Rise Education VIP ដើម្បីទទួលបានមេរៀន ដែលសាលាមិនបានបង្រៀន និងបណ្ណាល័យឯកសារ<strong style="color:#fbbf24">ជោគជ័យ</strong>គ្មានដែនកំណត់។
+
+        <!-- Subtitle -->
+        <p style="font-family:'Noto Sans Khmer',sans-serif;font-size:13px;color:rgba(255,255,255,0.65);line-height:2;text-align:center;margin-bottom:24px">
+          ចូលរួមជាមួយ Rise Education VIP ដើម្បីទទួលបាននូវមេរៀន ដែលសាលាមិនបានបង្រៀន និងបណ្ណាល័យឯកសារ <span style="color:#fbbf24;font-weight:700">ជោគជ័យ</span> គ្មានដែនកំណត់។
         </p>
-        <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:100px;padding:10px 20px;font-family:'Noto Sans Khmer',sans-serif;font-size:13px;color:rgba(255,255,255,0.75);margin-bottom:24px;text-align:center">
-          ☕ ចាប់ពី <strong style="color:#fbbf24">៨,០០០ រៀល/ខែ</strong> · អាចបញ្ឈប់បានគ្រប់ពេល
+
+        <!-- Price badge -->
+        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:14px 20px;margin-bottom:20px;text-align:center">
+          <div style="font-family:'Noto Sans Khmer',sans-serif;font-size:14px;color:rgba(255,255,255,0.8);margin-bottom:4px;display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap">
+            <span>☕</span>
+            <span>ចាប់ពី</span>
+            <span style="color:#fbbf24;font-weight:700;font-size:16px">៨,០០០ រៀល/ខែ</span>
+          </div>
+          <div style="font-family:'Noto Sans Khmer',sans-serif;font-size:12px;color:rgba(255,255,255,0.4)">• អាចបញ្ឈប់បានគ្រប់ពេល</div>
         </div>
-        <!-- Fix 1: VIP button - allow wrap on mobile -->
-        <div style="margin-bottom:16px;padding:0 8px">
-          <a href="vip-join.html" style="display:block;width:100%;max-width:360px;margin:0 auto;background:linear-gradient(135deg,#d97706,#f59e0b);color:#fff;border-radius:14px;padding:16px 20px;text-decoration:none;box-shadow:0 4px 20px rgba(217,119,6,0.4);box-sizing:border-box">
-            <span style="font-family:'Noto Sans Khmer',sans-serif;font-size:15px;font-weight:700;line-height:1.8;display:block;text-align:center">⭐ ចូលរួមជាមួយគ្រួសារ VIP ឥឡូវនេះ</span>
+
+        <!-- CTA button -->
+        <a href="vip-join.html" style="display:block;width:100%;background:#d97706;color:#fff;border-radius:14px;padding:16px 20px;font-family:'Noto Sans Khmer',sans-serif;font-size:15px;font-weight:700;line-height:1.7;text-align:center;text-decoration:none;margin-bottom:16px;box-sizing:border-box">
+          👉 ចុះឈ្មោះជាសមាជិក VIP ឥឡូវនេះ
+        </a>
+
+        <!-- Secondary link -->
+        <div style="text-align:center;margin-bottom:28px">
+          <a href="index.html#articles" style="font-family:'Noto Sans Khmer',sans-serif;font-size:12px;color:rgba(255,255,255,0.4);text-decoration:none;line-height:1.8">
+            ឬអានអត្ថបទឥតគិតថ្លៃជាមុនសិន ➔
           </a>
         </div>
 
-        <!-- Fix 2: secondary link — visible white color -->
-        <div style="margin-bottom:24px">
-          <a href="index.html#articles" style="font-family:'Noto Sans Khmer',sans-serif;font-size:13px;color:rgba(255,255,255,0.7);text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.4);padding-bottom:2px">
-            ឬអានអត្ថបទឥតគិតថ្លៃជាមុនសិន →
-          </a>
-        </div>
-        <div style="padding-top:20px;border-top:1px solid rgba(255,255,255,0.08);display:flex;flex-wrap:wrap;gap:16px;justify-content:center;align-items:center;font-size:13px">
-          <!-- Gmail SVG icon + email -->
-          <a href="mailto:bunhoeut@gmail.com" style="color:rgba(255,255,255,0.5);text-decoration:none;display:inline-flex;align-items:center;gap:6px;font-family:'Inter',sans-serif">
+        <!-- Divider -->
+        <div style="height:1px;background:rgba(255,255,255,0.08);margin-bottom:20px"></div>
+
+        <!-- Contacts -->
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px">
+          <a href="mailto:bunhoeut@gmail.com" style="display:flex;align-items:center;justify-content:center;gap:8px;font-family:'Inter',sans-serif;font-size:13px;color:rgba(255,255,255,0.5);text-decoration:none">
             <svg width="15" height="15" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
               <path fill="#EA4335" d="M6 40h6V23.8L4 18v18q0 1.65 1.175 2.825Q6.35 40 8 40Z"/>
               <path fill="#34A853" d="M36 40h6q1.65 0 2.825-1.175Q46 37.65 46 36V18l-8 5.8Z"/>
@@ -400,26 +424,34 @@
             </svg>
             bunhoeut@gmail.com
           </a>
-          <a href="tel:+85598975555" style="color:rgba(255,255,255,0.5);text-decoration:none;font-family:'Inter',sans-serif;display:inline-flex;align-items:center;gap:5px">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.77a16 16 0 0 0 6.29 6.29l.87-.87a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <a href="tel:+85598975555" style="display:flex;align-items:center;justify-content:center;gap:8px;font-family:'Inter',sans-serif;font-size:13px;color:rgba(255,255,255,0.5);text-decoration:none">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.77a16 16 0 0 0 6.29 6.29l.87-.87a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
             098 975 555
           </a>
-          <a href="https://t.me/RiseEducationX" target="_blank" style="color:rgba(255,255,255,0.5);text-decoration:none;font-family:'Inter',sans-serif;display:inline-flex;align-items:center;gap:5px">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="rgba(255,255,255,0.5)"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.941z"/></svg>
+          <a href="https://t.me/RiseEducationX" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:8px;font-family:'Inter',sans-serif;font-size:13px;color:rgba(255,255,255,0.5);text-decoration:none">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="rgba(255,255,255,0.5)"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.941z"/></svg>
             Telegram Group
           </a>
         </div>
+
+        <!-- Footer copyright -->
+        <div style="text-align:center;display:flex;align-items:center;justify-content:center;gap:8px">
+          <span style="font-family:'Inter',sans-serif;font-size:13px;font-weight:700;color:#d97706;letter-spacing:0.06em">RISE</span>
+          <span style="width:1px;height:12px;background:rgba(255,255,255,0.15);display:inline-block"></span>
+          <span style="font-family:'Inter',sans-serif;font-size:12px;color:rgba(255,255,255,0.25)">© 2026 Rise Education</span>
+        </div>
+
       </div>
     </div>
   </div>
 </section>
 
-<footer style="background:#0f172a;padding:22px 20px;text-align:center;border-top:1px solid rgba(255,255,255,0.06)">
-  <div style="display:inline-flex;align-items:center;justify-content:center;gap:10px">
-    <!-- Text logo — no image background issue -->
-    <span style="font-family:'Inter',sans-serif;font-size:15px;font-weight:800;color:#d97706;letter-spacing:0.06em">RISE</span>
-    <span style="width:1px;height:14px;background:rgba(255,255,255,0.15);display:inline-block"></span>
-    <span style="font-family:'Inter',sans-serif;font-size:13px;color:rgba(255,255,255,0.35)">© 2026 Rise Education</span>
+
+<footer style="background:#0f172a;padding:16px 20px;text-align:center">
+  <div style="display:inline-flex;align-items:center;justify-content:center;gap:8px">
+    <span style="font-family:'Inter',sans-serif;font-size:13px;font-weight:700;color:#d97706;letter-spacing:0.06em">RISE</span>
+    <span style="width:1px;height:12px;background:rgba(255,255,255,0.15);display:inline-block"></span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;color:rgba(255,255,255,0.25)">© 2026 Rise Education</span>
   </div>
 </footer>
 <script src="app.js"></script>
