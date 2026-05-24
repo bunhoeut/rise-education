@@ -7,6 +7,66 @@
 <meta name="description" content="បណ្ណាល័យចំណេះដឹងសម្រាប់និស្សិត និងយុវវ័យខ្មែរ — Personal Growth, Study Skills, Life Skills, Career, Finance">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<style>
+/* ─── PILLAR GRID — Option B 2-col (matches pillar.html) ─── */
+.pillar-grid-home {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.pillar-btn-home {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 14px;
+  background: #fff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 16px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.18s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pillar-btn-home:active { transform: scale(0.97); }
+
+.pillar-btn-home:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  transform: translateY(-1px);
+}
+
+.pillar-icon-home {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.pillar-btn-kh-home {
+  font-family: 'Noto Sans Khmer', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.pillar-btn-en-home {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  color: #94a3b8;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  margin-top: 1px;
+}
+</style>
 </head>
 <body>
 
@@ -28,10 +88,66 @@
   </div>
 </section>
 
-<!-- PILLARS -->
-<section class="section" style="padding-top:0;padding-bottom:24px">
+<!-- PILLARS — Option B 2-col grid -->
+<section class="section" style="padding-top:8px;padding-bottom:24px">
   <div class="container">
-    <div class="pillars-row" id="pillars-row" style="justify-content:center;flex-wrap:wrap"></div>
+    <div class="pillar-grid-home">
+
+      <!-- Growth -->
+      <a class="pillar-btn-home" href="pillar.html?pillar=growth">
+        <div class="pillar-icon-home" style="background:#f0fde4">🌱</div>
+        <div>
+          <div class="pillar-btn-kh-home">ការអភិវឌ្ឍខ្លួន</div>
+          <div class="pillar-btn-en-home">Personal Growth</div>
+        </div>
+      </a>
+
+      <!-- Study -->
+      <a class="pillar-btn-home" href="pillar.html?pillar=study">
+        <div class="pillar-icon-home" style="background:#e0f7ff">📚</div>
+        <div>
+          <div class="pillar-btn-kh-home">ជំនាញសិក្សា</div>
+          <div class="pillar-btn-en-home">Study Skills</div>
+        </div>
+      </a>
+
+      <!-- Life -->
+      <a class="pillar-btn-home" href="pillar.html?pillar=life">
+        <div class="pillar-icon-home" style="background:#fff3e0">💡</div>
+        <div>
+          <div class="pillar-btn-kh-home">ជំនាញជីវិត</div>
+          <div class="pillar-btn-en-home">Life Skills</div>
+        </div>
+      </a>
+
+      <!-- Career -->
+      <a class="pillar-btn-home" href="pillar.html?pillar=career">
+        <div class="pillar-icon-home" style="background:#f3e8ff">🚀</div>
+        <div>
+          <div class="pillar-btn-kh-home">ការរីកចម្រើនអាជីព</div>
+          <div class="pillar-btn-en-home">Career Growth</div>
+        </div>
+      </a>
+
+      <!-- Finance -->
+      <a class="pillar-btn-home" href="pillar.html?pillar=finance">
+        <div class="pillar-icon-home" style="background:#e8fff3">💰</div>
+        <div>
+          <div class="pillar-btn-kh-home">ហិរញ្ញវត្ថុ</div>
+          <div class="pillar-btn-en-home">Personal Finance</div>
+        </div>
+      </a>
+
+      <!-- Communication -->
+      <a class="pillar-btn-home" href="pillar.html?pillar=comm">
+        <div class="pillar-icon-home" style="background:#fff0f5">🗣️</div>
+        <div>
+          <div class="pillar-btn-kh-home">ទំនាក់ទំនង & ភាសា</div>
+          <div class="pillar-btn-en-home">Communication</div>
+        </div>
+      </a>
+
+    </div>
   </div>
 </section>
 
@@ -46,7 +162,6 @@
       <a href="pillar.html" class="see-all">មើលទាំងអស់ →</a>
     </div>
     <div class="articles-grid" id="articles-grid">
-      <!-- Loaded by JS -->
       <div style="grid-column:1/-1;text-align:center;padding:48px;color:var(--muted);font-family:'Noto Sans Khmer',serif">
         កំពុងផ្ទុក...
       </div>
@@ -54,7 +169,7 @@
   </div>
 </section>
 
-<!-- VIP BANNER — Apple style light -->
+<!-- VIP BANNER -->
 <section class="section" style="padding-top:0">
   <div class="container">
     <div style="background:#fff;border:1px solid #e2e8f0;border-radius:24px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
@@ -65,8 +180,8 @@
         <p style="font-family:'Noto Sans Khmer',sans-serif;font-size:14px;color:#475569;line-height:1.9;max-width:500px;margin:0 auto 20px">ចូលរួមជាមួយសហគមន៍យើង ទទួលបានចំណេះដឹង និងបទពិសោធន៍ពិសេស ដែលនឹងជួយឱ្យអ្នក<strong style="color:#0f172a">រីកចម្រើនលើសពីការរំពឹងទុក</strong>។</p>
         <div style="display:inline-flex;align-items:center;gap:8px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:100px;padding:8px 18px;font-family:'Noto Sans Khmer',sans-serif;font-size:13px;color:#475569;margin-bottom:24px">☕ ចាប់ពី <strong style="color:#d97706">៨,០០០ រៀល/ខែ</strong> · អាចបញ្ឈប់បានគ្រប់ពេល</div>
         <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:24px">
-          <a href="vip-join.html" style="display:inline-flex;align-items:center;gap:8px;background:#d97706;color:#fff;border-radius:12px;padding:13px 26px;font-size:14px;font-weight:700;font-family:'Noto Sans Khmer',sans-serif;text-decoration:none;transition:all 0.2s" onmouseover="this.style.background='#b45309'" onmouseout="this.style.background='#d97706'">ចាប់ផ្តើមចុះឈ្មោះឥឡូវ →</a>
-          <a href="vip-login.html" style="display:inline-flex;align-items:center;gap:8px;background:#f8fafc;color:#0f172a;border:1px solid #e2e8f0;border-radius:12px;padding:13px 22px;font-size:14px;font-family:'Noto Sans Khmer',sans-serif;text-decoration:none;transition:all 0.2s" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='#f8fafc'">ចូលគណនី</a>
+          <a href="vip-join.html" style="display:inline-flex;align-items:center;gap:8px;background:#d97706;color:#fff;border-radius:12px;padding:13px 26px;font-size:14px;font-weight:700;font-family:'Noto Sans Khmer',sans-serif;text-decoration:none">ចាប់ផ្តើមចុះឈ្មោះឥឡូវ →</a>
+          <a href="vip-login.html" style="display:inline-flex;align-items:center;gap:8px;background:#f8fafc;color:#0f172a;border:1px solid #e2e8f0;border-radius:12px;padding:13px 22px;font-size:14px;font-family:'Noto Sans Khmer',sans-serif;text-decoration:none">ចូលគណនី</a>
         </div>
         <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;padding-top:16px;border-top:1px solid #f1f5f9">
           <span style="font-size:12px;color:#475569;font-family:'Noto Sans Khmer',sans-serif;display:flex;align-items:center;gap:5px"><span style="color:#d97706;font-weight:700">✓</span> អត្ថបទ VIP ពិសេស</span>
@@ -79,29 +194,12 @@
   </div>
 </section>
 
-
-
-
 <div id="footer-placeholder"></div>
 
 <script src="app.js"></script>
 <script>
 (async function() {
   initPage('home');
-
-  // Build pillar chips
-  const pillarsRow = document.getElementById('pillars-row');
-  if (pillarsRow) {
-    pillarsRow.innerHTML = CONFIG.pillars.map(p => `
-      <a class="pillar-chip" href="pillar.html?pillar=${p.id}">
-        <span class="pillar-dot" style="background:${p.color}"></span>
-        <div>
-          <div class="pillar-kh">${p.kh}</div>
-          <div class="pillar-en">${p.en}</div>
-        </div>
-      </a>
-    `).join('');
-  }
 
   // Load articles
   const articles = await DB.getArticles();
@@ -114,9 +212,6 @@
     const latest = articles.slice(0, 6);
     grid.innerHTML = latest.map(a => buildArticleCard(a, isVIP)).join('');
   }
-
-  // Founder photo
-
 })();
 </script>
 </body>
