@@ -251,7 +251,7 @@ input, textarea, select { font-family: 'Noto Sans Khmer', 'Inter', sans-serif; f
 #progress-bar { position: fixed; top: 0; left: 0; height: 3px; z-index: 200; width: 0%; transition: width 0.1s; border-radius: 0 2px 2px 0; }
 
 /* ─── ARTICLE READER ─── */
-.article-header { padding: 32px 0 24px; }
+.article-header { padding: 12px 0 20px; }
 .article-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
 .article-title { font-family: 'Noto Sans Khmer', 'Inter', sans-serif; font-size: clamp(22px, 5vw, 36px); font-weight: 700; line-height: 1.4; margin-bottom: 10px; }
 .article-subtitle { font-family: 'Inter', sans-serif; font-size: 15px; color: var(--muted); margin-bottom: 16px; font-style: italic; }
@@ -261,9 +261,9 @@ input, textarea, select { font-family: 'Noto Sans Khmer', 'Inter', sans-serif; f
 .article-body {
   font-family: 'Noto Sans Khmer', 'Inter', sans-serif;
   font-size: 17px;
-  line-height: 2.1;        /* Khmer needs extra space for subscripts */
+  line-height: 2.1;
   color: #374151;
-  padding: 28px 0 48px;
+  padding: 20px 0 40px;
   word-break: break-word;
 }
 .article-body h2 {
@@ -271,9 +271,10 @@ input, textarea, select { font-family: 'Noto Sans Khmer', 'Inter', sans-serif; f
   font-size: 20px;
   font-weight: 700;
   color: var(--text);
-  margin: 36px 0 14px;
+  margin: 32px 0 12px;
   padding-left: 14px;
   border-left: 4px solid var(--gold);
+  border-radius: 0;
   line-height: 1.6;
 }
 .article-body h3 {
@@ -281,16 +282,16 @@ input, textarea, select { font-family: 'Noto Sans Khmer', 'Inter', sans-serif; f
   font-size: 17px;
   font-weight: 700;
   color: var(--text);
-  margin: 28px 0 10px;
+  margin: 24px 0 8px;
   line-height: 1.6;
 }
 .article-body p {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   line-height: 2.1;
 }
 .article-body strong { color: var(--text); font-weight: 700; }
-.article-body ul, .article-body ol { margin: 12px 0 20px 20px; }
-.article-body li { margin-bottom: 10px; line-height: 2; }
+.article-body ul, .article-body ol { margin: 8px 0 14px 20px; }
+.article-body li { margin-bottom: 8px; line-height: 2; }
 .article-body blockquote {
   border-left: 4px solid var(--gold);
   padding: 12px 20px;
