@@ -264,15 +264,21 @@ function openArticle(id) {
 function parseMarkdown(md) {
   if (!md) return '';
   return md
-    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
-    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^###\s*(.+)$/gm, '<h3>$1</h3>')
+    .replace(/^##\s*(.+)$/gm, '<h2>$1</h2>')
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.+?)\*/g, '<em>$1</em>')
-    .replace(/^- (.+)$/gm, '<li>$1</li>')
-    .replace(/(<li>.*<\/li>\n?)+/g, m => `<ul>${m}</ul>`)
-    .replace(/\n\n/g, '</p><p>')
-    .replace(/^(?!<[hul])(.+)$/gm, '<p>$1</p>')
-    .replace(/<p><\/p>/g, '');
+    .replace(/^□ (.+)$/gm, '<li class="li-square">$1</li>')
+    .replace(/^- (.+)$/gm, '<li class="li-dot">$1</li>')
+    .replace(/(<li class="li-square">.*<\/li>\n?)+/g, m => `<ul class="ul-square">${m}</ul>`)
+    .replace(/(<li class="li-dot">.*<\/li>\n?)+/g, m => `<ul class="ul-dot">${m}</ul>`)
+    .replace(/\n\n/g, '§PARA§')
+    .replace(/\n/g, '<br>')
+    .replace(/§PARA§/g, '</p><p>')
+    .replace(/^(?!<[hul])(.+)$/gm, (m) => m.startsWith('<p>') || m.startsWith('</p>') ? m : `<p>${m}</p>`)
+    .replace(/<p><\/p>/g, '')
+    .replace(/<p>(<h[23]>)/g, '$1')
+    .replace(/(<\/h[23]>)<\/p>/g, '$1');
 }
 
 // ─── READ TIME CALCULATOR ─────────────
