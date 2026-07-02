@@ -270,15 +270,17 @@ function parseMarkdown(md) {
     .replace(/\*(.+?)\*/g, '<em>$1</em>')
     .replace(/^□\s*(.+)$/gm, '<li class="li-square">$1</li>')
     .replace(/^-\s*(.+)$/gm, '<li class="li-dot">$1</li>')
-    .replace(/(<li class="li-square">.*<\/li>\n?)+/g, m => `<ul class="ul-square">${m}</ul>`)
-    .replace(/(<li class="li-dot">.*<\/li>\n?)+/g, m => `<ul class="ul-dot">${m}</ul>`)
+    .replace(/(<li class="li-square">[\s\S]*?<\/li>\n?)+/g, m => `<ul class="ul-square">${m.replace(/\n/g,'')}</ul>`)
+    .replace(/(<li class="li-dot">[\s\S]*?<\/li>\n?)+/g, m => `<ul class="ul-dot">${m.replace(/\n/g,'')}</ul>`)
     .replace(/\n\n/g, '§PARA§')
     .replace(/\n/g, '<br>')
     .replace(/§PARA§/g, '</p><p>')
     .replace(/^(?!<[hul])(.+)$/gm, (m) => m.startsWith('<p>') || m.startsWith('</p>') ? m : `<p>${m}</p>`)
     .replace(/<p><\/p>/g, '')
     .replace(/<p>(<h[23]>)/g, '$1')
-    .replace(/(<\/h[23]>)<\/p>/g, '$1');
+    .replace(/(<\/h[23]>)<\/p>/g, '$1')
+    .replace(/<br>\s*(<\/?[uo]l)/g, '$1')
+    .replace(/(<\/li>)\s*<br>/g, '$1');
 }
 
 // ─── READ TIME CALCULATOR ─────────────
