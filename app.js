@@ -264,6 +264,7 @@ function openArticle(id) {
 function parseMarkdown(md) {
   if (!md) return '';
   return md
+    .replace(/^####\s*(.+)$/gm, '<h4>$1</h4>')
     .replace(/^###\s*(.+)$/gm, '<h3>$1</h3>')
     .replace(/^##\s*(.+)$/gm, '<h2>$1</h2>')
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
@@ -277,8 +278,8 @@ function parseMarkdown(md) {
     .replace(/§PARA§/g, '</p><p>')
     .replace(/^(?!<[hul])(.+)$/gm, (m) => m.startsWith('<p>') || m.startsWith('</p>') ? m : `<p>${m}</p>`)
     .replace(/<p><\/p>/g, '')
-    .replace(/<p>(<h[23]>)/g, '$1')
-    .replace(/(<\/h[23]>)<\/p>/g, '$1')
+    .replace(/<p>(<h[234]>)/g, '$1')
+    .replace(/(<\/h[234]>)<\/p>/g, '$1')
     .replace(/<br>\s*(<\/?[uo]l)/g, '$1')
     .replace(/(<\/li>)\s*<br>/g, '$1');
 }

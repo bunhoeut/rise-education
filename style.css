@@ -283,7 +283,19 @@ input, textarea, select { font-family: 'Noto Sans Khmer', 'Inter', sans-serif; f
   font-weight: 700;
   color: var(--text);
   margin: 24px 0 8px;
+  padding-left: 10px;
+  border-left: 3px solid var(--orange);
   line-height: 1.6;
+}
+.article-body h4 {
+  font-family: 'Noto Sans Khmer', 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--muted);
+  margin: 16px 0 6px;
+  line-height: 1.6;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 .article-body p {
   margin-bottom: 14px;
