@@ -303,7 +303,7 @@ input, textarea, select { font-family: 'Noto Sans Khmer', 'Inter', sans-serif; f
 .article-body .ul-dot .li-dot {
   padding-left: 20px;
   position: relative;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
   line-height: 2;
 }
 .article-body .ul-dot .li-dot::before {
@@ -324,7 +324,7 @@ input, textarea, select { font-family: 'Noto Sans Khmer', 'Inter', sans-serif; f
 .article-body .ul-square .li-square {
   padding-left: 22px;
   position: relative;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
   line-height: 2;
 }
 .article-body .ul-square .li-square::before {
