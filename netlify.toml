@@ -1,6 +1,2 @@
 [build]
-  publish = "."
-  command = ""
-
-[build.environment]
-  NODE_VERSION = "18"
+  ignore = "git diff --quiet HEAD^ HEAD -- . ':(exclude)articles.json'"
