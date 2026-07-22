@@ -215,7 +215,7 @@ async function saveToGitHub(articles) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         articles: articles,
-        adminPassword: CONFIG.admin_password  // verified server-side too
+        password: CONFIG.admin_password  // verified server-side too
       })
     });
     const data = await res.json();
