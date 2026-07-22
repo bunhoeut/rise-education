@@ -274,10 +274,6 @@ input, textarea, select { font-family: 'Noto Sans Khmer', 'Inter', sans-serif; f
   margin: 32px 0 12px;
   line-height: 1.6;
 }
-.article-body h2:not(.h-numbered) {
-  padding-left: 14px;
-  border-left: 4px solid var(--gold);
-}
 .article-body h3 {
   font-family: 'Noto Sans Khmer', 'Inter', sans-serif;
   font-size: 17px;
@@ -286,45 +282,59 @@ input, textarea, select { font-family: 'Noto Sans Khmer', 'Inter', sans-serif; f
   margin: 24px 0 8px;
   line-height: 1.6;
 }
-.article-body h3:not(.h-numbered) {
-  padding-left: 10px;
-  border-left: 3px solid var(--orange);
-}
 .article-body h2.h-numbered,
 .article-body h3.h-numbered {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin: 32px 0 12px;
 }
-.article-body h2.h-numbered .h-num {
+.article-body h2.h-numbered { background: var(--gold-lt); }
+.article-body h3.h-numbered { background: var(--orange-lt); margin: 24px 0 8px; }
+.article-body h2.h-numbered .h-bar,
+.article-body h3.h-numbered .h-bar {
+  width: 4px;
+  align-self: stretch;
+  border-radius: 2px;
   flex-shrink: 0;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: var(--gold-lt);
+}
+.article-body h2.h-numbered .h-bar { background: var(--gold); }
+.article-body h3.h-numbered .h-bar { background: var(--orange); }
+.article-body h2.h-numbered .h-content,
+.article-body h3.h-numbered .h-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.article-body h2.h-numbered .h-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   color: var(--gold);
-  font-size: 14px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
-.article-body h3.h-numbered .h-num {
-  flex-shrink: 0;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: var(--orange-lt);
+.article-body h3.h-numbered .h-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   color: var(--orange);
-  font-size: 12px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
-.article-body h2.h-numbered .h-num-text,
-.article-body h3.h-numbered .h-num-text {
-  flex: 1;
+.article-body h2.h-numbered .h-title {
+  font-family: 'Noto Sans Khmer', 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.5;
+}
+.article-body h3.h-numbered .h-title {
+  font-family: 'Noto Sans Khmer', 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.5;
 }
 .article-body h4 {
   font-family: 'Noto Sans Khmer', 'Inter', sans-serif;

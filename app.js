@@ -266,7 +266,7 @@ function parseMarkdown(md) {
   const numberedHeading = (tag) => (m, p1) => {
     const match = p1.match(/^([\u17E0-\u17E9]+|\d+)\.\s*(.+)$/);
     if (match) {
-      return `<${tag} class="h-numbered"><span class="h-num">${match[1]}</span><span class="h-num-text">${match[2]}</span></${tag}>`;
+      return `<${tag} class="h-numbered"><span class="h-bar"></span><span class="h-content"><span class="h-label">ជំហានទី ${match[1]}</span><span class="h-title">${match[2]}</span></span></${tag}>`;
     }
     return `<${tag}>${p1}</${tag}>`;
   };
