@@ -272,10 +272,11 @@ input, textarea, select { font-family: 'Noto Sans Khmer', 'Inter', sans-serif; f
   font-weight: 700;
   color: var(--text);
   margin: 32px 0 12px;
+  line-height: 1.6;
+}
+.article-body h2:not(.h-numbered) {
   padding-left: 14px;
   border-left: 4px solid var(--gold);
-  border-radius: 0;
-  line-height: 1.6;
 }
 .article-body h3 {
   font-family: 'Noto Sans Khmer', 'Inter', sans-serif;
@@ -283,9 +284,47 @@ input, textarea, select { font-family: 'Noto Sans Khmer', 'Inter', sans-serif; f
   font-weight: 700;
   color: var(--text);
   margin: 24px 0 8px;
+  line-height: 1.6;
+}
+.article-body h3:not(.h-numbered) {
   padding-left: 10px;
   border-left: 3px solid var(--orange);
-  line-height: 1.6;
+}
+.article-body h2.h-numbered,
+.article-body h3.h-numbered {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.article-body h2.h-numbered .h-num {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--gold-lt);
+  color: var(--gold);
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.article-body h3.h-numbered .h-num {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--orange-lt);
+  color: var(--orange);
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.article-body h2.h-numbered .h-num-text,
+.article-body h3.h-numbered .h-num-text {
+  flex: 1;
 }
 .article-body h4 {
   font-family: 'Noto Sans Khmer', 'Inter', sans-serif;

@@ -263,10 +263,17 @@ function openArticle(id) {
 // ─── MARKDOWN PARSER (simple) ─────────
 function parseMarkdown(md) {
   if (!md) return '';
+  const numberedHeading = (tag) => (m, p1) => {
+    const match = p1.match(/^([\u17E0-\u17E9]+|\d+)\.\s*(.+)$/);
+    if (match) {
+      return `<${tag} class="h-numbered"><span class="h-num">${match[1]}</span><span class="h-num-text">${match[2]}</span></${tag}>`;
+    }
+    return `<${tag}>${p1}</${tag}>`;
+  };
   return md
     .replace(/^####\s*(.+)$/gm, '<h4>$1</h4>')
-    .replace(/^###\s*(.+)$/gm, '<h3>$1</h3>')
-    .replace(/^##\s*(.+)$/gm, '<h2>$1</h2>')
+    .replace(/^###\s*(.+)$/gm, numberedHeading('h3'))
+    .replace(/^##\s*(.+)$/gm, numberedHeading('h2'))
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.+?)\*/g, '<em>$1</em>')
     .replace(/^□\s*(.+)$/gm, '<li class="li-square">$1</li>')
