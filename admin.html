@@ -202,13 +202,15 @@ body { background: var(--bg); }
 <script src="app.js"></script>
 <script>
 
-// ─── AUTO-SAVE TO GITHUB via Netlify Function ─────────────────────────────
-// Token is stored securely in Netlify Environment Variables (GITHUB_TOKEN)
-// This function calls /.netlify/functions/save-articles which uses the token server-side
+// ─── AUTO-SAVE TO GITHUB via Cloudflare Worker ────────────────────────────
+// Token is stored securely in Cloudflare Worker Environment Variables (GITHUB_TOKEN)
+// This calls the rise-save-articles Worker which uses the token server-side
+const WORKER_URL = 'https://rise-save-articles.bunhoeut.workers.dev';
+
 async function saveToGitHub(articles) {
   setSyncStatus('ing', '⏳ កំពុង Save ទៅ GitHub...');
   try {
-    const res = await fetch('/.netlify/functions/save-articles', {
+    const res = await fetch(WORKER_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
